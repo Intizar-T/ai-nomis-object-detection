@@ -1,7 +1,7 @@
 {
 	"name": "image-labeling",
 	"version": "0.1.0",
-	"homepage": "https://Intizar-T.github.io/ai-nomis-image-labeling",
+	"homepage": "https://Intizar-T.github.io/ai-nomis-object-detection",
 	"private": true,
 	"dependencies": {
 		"@emotion/react": "^11.9.3",
