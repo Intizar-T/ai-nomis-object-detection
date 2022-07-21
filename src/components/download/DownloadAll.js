@@ -1,54 +1,82 @@
 import JSZipUtils from "jszip-utils";
 import { saveAs } from 'save-as'
 
-const DownloadAll = (state, dispatch, uri) => {
-    //const currentFileIndex = state.currentFileIndex;
+const DownloadAll = async (state, dispatch) => {
     const JSZip = require('jszip');
     let zip = new JSZip();
     const zipFileName = "Labeled_Object_Images.zip";
-    //let imageName = "", link = null;
     const filesLength = state.files.length;
-    //const URLs = [];
 
-    //console.log(state.imageURLs);
 
-    /* state.imageURLs.forEach(function(url, i) {
-        //dispatch({ type:"UPDATE_CURRENT_FILE_INDEX", index: index });
-        //console.log(state.currentFileIndex);
-        link = document.createElement('a');
-        link.download = i + ".png";
-        link.href = url;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link); 
-    }) */
-    
-    //dispatch({ type:"UPDATE_CURRENT_FILE_INDEX", index: currentFileIndex });
-    //const image
-    state.imageURLs.forEach(function(url, i) {
-        let imageName = i + ".png";
-        console.log(imageName);
-        //console.log(URL);
-        //url = url.replace(/^data:image\/(png|jpg);base64,/, "");
-        JSZipUtils.getBinaryContent(url, function(err, data) {
-            if(err) {
-                console.log("Error while Downloading all images: \n" + err);
-                alert("Error occured while downloading all images");
-            }
-            else {
-                //console.log(imageName)
-                zip.file(imageName, data, {binary: true});
-                //count++;
-                if(i === filesLength - 1){
-                    console.log("about to zip");
-                    zip.generateAsync({type: 'blob'}).then(function(content) {
-                        saveAs(content, zipFileName);
-                    });
+
+    const promises = state.files.map((file, index) => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const img = new window.Image();
+        img.src = file[1];
+
+        return new Promise((resolve, reject) => {
+            img.onload = function() {
+                try {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    context.drawImage(img, 0, 0);
+                    const currRect = state.rectangles[index];
+                    context.lineWidth = currRect.strokeWidth;
+                    context.strokeRect(currRect.x, currRect.y, currRect.width, currRect.height);
+
+                    // URLs.push([file[0], canvas.toDataURL()]);
+                    resolve([file[0], canvas.toDataURL()]);
+                } catch(err){
+                    // do something;
+                    reject(err);
                 }
             }
-        });
+        })
     });
 
+    try {
+        const result = await Promise.all(promises);
+        result.forEach(function(url, i) {
+                let imageName = url[0];
+                console.log(imageName);
+                JSZipUtils.getBinaryContent(url[1], function(err, data) {
+                    if(err) {
+                        console.log("Error while Downloading all images: \n" + err);
+                        alert("Error occured while downloading all images");
+                    }
+                    else {
+                        zip.file(imageName, data, {binary: true});
+                        if(i === filesLength - 1){
+                            console.log("about to zip");
+                            zip.generateAsync({type: 'blob'}).then(function(content) {
+                                saveAs(content, zipFileName);
+                            });
+                        }
+                    }
+                });
+            });
+    } catch(err) {
+        console.error(err);
+    }
+
+    
+
+   
+        /* const handleLoad = () => {
+            //console.log(image.width + ", " + image.height);
+            context.canvas.width = image.width;
+            context.canvas.height= image.height;
+            //con
+        }
+
+        image.addEventListener('load', handleLoad); */
+        
+        
+        //console.log(canvas);
+        
+        //document.body.removeChild(canvas);
+    
     /* const nextButton = document.getElementById("nextButton");
     nextButton.click();
     console.log("pressed next, about to press prev");

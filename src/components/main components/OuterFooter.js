@@ -6,14 +6,14 @@ import CustomButton from '../helper components/CustomButton';
 import DownloadAll from '../download/DownloadAll';
 import DownloadAllText from '../download/DownloadAllText';
 
-const OuterFooter = ({ uri }) => {
+const OuterFooter = () => {
     const { state, dispatch } = useContext(Context);
 
     return (
         <div className="flex flex-row gap-2">
            <CustomButton
                 action={() => {
-                    DownloadAll(state, dispatch, uri);
+                    DownloadAll(state, dispatch);
                 }}
                 text = "Download All"
                 color="green"

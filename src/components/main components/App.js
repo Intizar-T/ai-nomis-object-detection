@@ -26,24 +26,24 @@ function App() {
   
 	const stageRef = React.useRef(null);
   let uri = null;
-  if(stageRef.current !== null){
-    uri = stageRef.current.toDataURL();
-  }
+  // if(stageRef.current !== null){
+  //   uri = stageRef.current.toDataURL();
+  // }
+  
+  // if(state.imageURLs.length < fileLength && 
+  //   uri !== null && 
+  //   !state.imageURLs.includes(uri) && 
+  //   uri.length > 10){
+  //     // console.log(state.currentFileIndex);
+  //     dispatch({ 
+  //       type:"SET_IMAGE_URLS", 
+  //       URLs: [...state.imageURLs, uri],
+  //       index: (state.currentFileIndex + 1),
+  //     });
 
-  if(state.imageURLs.length < fileLength && 
-    uri !== null && 
-    !state.imageURLs.includes(uri) && 
-    uri.length > 10){
-      //console.log(state.currentFileIndex);
-      dispatch({ 
-        type:"SET_IMAGE_URLS", 
-        URLs: [...state.imageURLs, uri],
-        index: (state.currentFileIndex + 1),
-      });
-
-      if(state.currentFileIndex === fileLength - 1){
-        dispatch({ type:"UPDATE_CURRENT_FILE_INDEX", index: 0 });}
-  }
+  //     if(state.currentFileIndex === fileLength - 1){
+  //       dispatch({ type:"UPDATE_CURRENT_FILE_INDEX", index: 0 });}
+  // }
 
   const handleExport = () => {
     DownloadImage(state, uri);
@@ -192,7 +192,7 @@ function App() {
         className="flex flex-row items-center justify-center h-16" 
       >
         {fileLength > 0 ? (
-          <OuterFooter uri={uri}/>
+          <OuterFooter />
         ) : (
           <Typography className={Breakpoints(state.screenSize) === 'sm' ? "text-sm dark:text-white" : "text-lg dark:text-white"}>
               Brought to you by AI-NOMIS's "NoCodingAI" team
