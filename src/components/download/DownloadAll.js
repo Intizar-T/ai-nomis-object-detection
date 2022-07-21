@@ -39,7 +39,6 @@ const DownloadAll = async (state, dispatch) => {
         const result = await Promise.all(promises);
         result.forEach(function(url, i) {
                 let imageName = url[0];
-                console.log(imageName);
                 JSZipUtils.getBinaryContent(url[1], function(err, data) {
                     if(err) {
                         console.log("Error while Downloading all images: \n" + err);
@@ -48,7 +47,6 @@ const DownloadAll = async (state, dispatch) => {
                     else {
                         zip.file(imageName, data, {binary: true});
                         if(i === filesLength - 1){
-                            console.log("about to zip");
                             zip.generateAsync({type: 'blob'}).then(function(content) {
                                 saveAs(content, zipFileName);
                             });

@@ -25,27 +25,9 @@ function App() {
   let fileLength = state.files.length;
   
 	const stageRef = React.useRef(null);
-  let uri = null;
-  // if(stageRef.current !== null){
-  //   uri = stageRef.current.toDataURL();
-  // }
-  
-  // if(state.imageURLs.length < fileLength && 
-  //   uri !== null && 
-  //   !state.imageURLs.includes(uri) && 
-  //   uri.length > 10){
-  //     // console.log(state.currentFileIndex);
-  //     dispatch({ 
-  //       type:"SET_IMAGE_URLS", 
-  //       URLs: [...state.imageURLs, uri],
-  //       index: (state.currentFileIndex + 1),
-  //     });
-
-  //     if(state.currentFileIndex === fileLength - 1){
-  //       dispatch({ type:"UPDATE_CURRENT_FILE_INDEX", index: 0 });}
-  // }
 
   const handleExport = () => {
+    const uri = stageRef.current.toDataURL();
     DownloadImage(state, uri);
   };
 
