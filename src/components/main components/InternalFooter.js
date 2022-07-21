@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContext } from "react";
 import { Context } from "../context/context";
 import DownloadText from "../download/DownloadText";
@@ -10,9 +10,16 @@ import DownloadImage from "../download/DownloadImage";
 //import { Grid, Button } from '@mui/material';
 import CustomButton from '../helper components/CustomButton';
 import { Card, Button, Input } from '@material-tailwind/react';
+import StageZoom from '../helper functions/StageZoom';
 
 const InternalFooter = ({ handleExport }) => {
     const { state, dispatch } = useContext(Context);
+    //const stageRef = React.useRef();
+    let stage = state.stage;
+    useEffect(() => {
+        stage = state.stage;
+        //console.log(stage);
+    }, [state.stage])
 
     const handleUndo = () => {
         const rects = state.rectangles;
@@ -51,7 +58,11 @@ const InternalFooter = ({ handleExport }) => {
                 {/* Prev, Next, Undo, Zoom in & out buttons */}
                 <div className='flex items-center justify-center gap-1'>
                     <CustomButton 
-                        action={() => {}} 
+                        action={() => {
+                            if(stage !== null){
+                                StageZoom(null, stage, 1);
+                            } 
+                        }} 
                         text="+" 
                     />
                      <CustomButton 
@@ -59,7 +70,11 @@ const InternalFooter = ({ handleExport }) => {
                         text="UNDO"
                     />
                     <CustomButton 
-                        action={() => {}} 
+                        action={() => {
+                            if(stage !== null){
+                                StageZoom(null, stage, -1);
+                            }
+                        }} 
                         text="-"
                     />
                 </div>

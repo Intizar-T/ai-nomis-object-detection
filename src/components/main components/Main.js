@@ -57,8 +57,8 @@ const Main = (props) => {
                         rects[state.rectangles[state.currentFileIndex].id] = newAttrs;
                         dispatch({ type: "UPDATE_RECTS", rects });
                     }}
-                    imgWidth={state.originalImageSize.width}
-                    imgHeight={state.originalImageSize.height}
+                    stageWidth={state.stageSize.width}
+                    stageHeight={state.stageSize.height}
                 />
             </Layer>
         </Stage>

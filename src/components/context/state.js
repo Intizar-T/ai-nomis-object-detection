@@ -31,6 +31,8 @@ const DEFAULT_STATE = {
 	selectedRectId: -1,
 	downloadAllPushed: false,
 	imageURLs: [],
+	stageSize: {width: 0, height: 0},
+	stage: null,
 };
 
 /* const INITIAL_STATE = parsedState

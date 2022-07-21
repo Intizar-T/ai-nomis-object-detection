@@ -151,6 +151,16 @@ const Reducer = (state, action) => {
 				...state,
 				originalImageSize: action.size,
 			};
+		case "SET_STAGE_SIZE":
+			return {
+				...state,
+				stageSize: action.size,
+			};
+		case "SET_STAGE":
+		return {
+			...state,
+			stage: action.stage,
+		};
 		case "SET_CURRENT_IMAGE_SIZE":
 			return {
 				...state,

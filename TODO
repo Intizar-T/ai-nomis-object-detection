@@ -1,0 +1,5 @@
+ - in Zoom Out -> make sure the rect doesn't go out of the image
+ - in Zoom in -> make sure the rect stays within the stage boundaries
+ - in Zoom in/out -> update the history (for undo and prev/next)
+ - if label is not selected, "Select Label" should be shown on the dropdown
+ - 

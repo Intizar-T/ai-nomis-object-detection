@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../context/context";
 import DownloadImage from "../download/DownloadImage";
-//import Header from "./Header";
+import Header from "./Header";
 import Main from "./Main";
 import InternalFooter from "./InternalFooter";
 import OuterFooter from "./OuterFooter";
@@ -9,6 +9,7 @@ import CustomButton from "../helper components/CustomButton";
 import ProcessImages from "../helper functions/ProcessImages";
 import ClassModal from "../helper components/ClassModal";
 import Dropdown from "../helper components/Dropdown";
+import StageZoom from "../helper functions/StageZoom";
 
 import {
   Card,
@@ -26,13 +27,36 @@ function App() {
   
 	const stageRef = React.useRef(null);
 
+  /* attach a zoom in/out callback to the stage
+   every time a stage changes */
+  useEffect(() => {
+    if(stageRef.current !== null){
+      const stage = stageRef.current;
+      //console.log(stage.width());
+      dispatch({ type: "SET_STAGE", stage: stage });
+
+      stage.on('wheel', (e) => {
+        e.evt.preventDefault();
+        StageZoom(e, stage, 0);
+      });
+      
+      dispatch({ type:'SET_STAGE_SIZE', size:{
+          width: stage.width(),
+          height: stage.height(),
+        } 
+      });
+    }
+  }, [stageRef.current])
+
   const handleExport = () => {
     const uri = stageRef.current.toDataURL();
     DownloadImage(state, uri);
   };
 
-  useEffect(() => {
-    
+  /* Change the window size in the state every time
+  the window resizes (for responsiveness) -> needs to be
+  reimplemented in a better way! */
+  useEffect(() => { 
     function handleResize() {
       dispatch({ type:"SET_SCREEN_SIZE", size:{
           width: window.innerWidth,
@@ -47,14 +71,13 @@ function App() {
 
 	useEffect(() => {
     fileLength = state.files.length;
-
 		if(state.files.length > 0 && !state.labelPrompt) {
 
 			if(state.rectangles[state.currentFileIndex].label === "not labeled"){
 				dispatch({ type: "SET_POPUP", popup: true });
 			}
 		}
-	}, []);
+	}, [state.currentFileIndex]);
 
   const checkDeselect = (e) => {
     try {
@@ -81,9 +104,7 @@ function App() {
         className="h-24 flex items-center justify-center border-2 border-blue-400" 
         floated={false}
       >
-        <Typography variant={Breakpoints(state.screenSize) === 'sm' ? 'h5' : 'h3'}>
-          Welcome to object detection platform!
-        </Typography>
+        <Header />
       </CardHeader>
       
       <CardBody 

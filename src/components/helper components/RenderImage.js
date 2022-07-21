@@ -10,9 +10,10 @@ const RenderImage = ({ URL, dispatch }) => {
     image.src = URL;
     const handleLoad = () => {
         dispatch({ type:'SET_ORIGINAL_IMAGE_SIZE', size:{
-            width: image.width,
-            height: image.height,
-        } })
+                width: image.width,
+                height: image.height,
+            } 
+        });
         //console.log(image.height + ", " + image.width);
     }
     image.addEventListener('load', handleLoad)
