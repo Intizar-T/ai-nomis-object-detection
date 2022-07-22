@@ -9,7 +9,7 @@ import CustomButton from "../helper components/CustomButton";
 import ProcessImages from "../helper functions/ProcessImages";
 import ClassModal from "../helper components/ClassModal";
 import Dropdown from "../helper components/Dropdown";
-import StageZoom from "../helper functions/StageZoom";
+//import StageZoom from "../helper functions/StageZoom";
 
 import {
   Card,

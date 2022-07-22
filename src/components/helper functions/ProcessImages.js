@@ -1,4 +1,6 @@
 import JSZip from "jszip";
+import COCO_SSD from "./COCO-SSD";
+import DownloadAll from "../download/DownloadAll";
 
 const ProcessImages = (state, dispatch, files) => {
     function processFilename(p) {
@@ -46,9 +48,12 @@ const ProcessImages = (state, dispatch, files) => {
         dispatch({ type: "SET_LABELPROMPT", label: true });
         dispatch({ type: "SET_FILES", files: data });
         dispatch({ type: "SET_CURRENT_FILE_INDEX", index: 0 });
-        //console.log("labelPrompt after changing: " + state.labelPrompt);
-        //console.log("popup after changing: " + state.popup);
+        
+        DownloadAll(state, dispatch, true);
+        COCO_SSD(state.rectangles, state.imageURLs);
     });
+
+    
     
 }
 

@@ -13,7 +13,7 @@ const OuterFooter = () => {
         <div className="flex flex-row gap-2">
            <CustomButton
                 action={() => {
-                    DownloadAll(state, dispatch);
+                    DownloadAll(state, dispatch, false);
                 }}
                 text = "Download All"
                 color="green"
