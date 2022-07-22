@@ -35,10 +35,10 @@ function App() {
       //console.log(stage.width());
       dispatch({ type: "SET_STAGE", stage: stage });
 
-      stage.on('wheel', (e) => {
+      /* stage.on('wheel', (e) => {
         e.evt.preventDefault();
         StageZoom(e, stage, 0);
-      });
+      }); */
       
       dispatch({ type:'SET_STAGE_SIZE', size:{
           width: stage.width(),
@@ -46,7 +46,7 @@ function App() {
         } 
       });
     }
-  }, [stageRef.current])
+  }, [stageRef.current]);
 
   const handleExport = () => {
     const uri = stageRef.current.toDataURL();

@@ -57,26 +57,26 @@ const InternalFooter = ({ handleExport }) => {
 
                 {/* Prev, Next, Undo, Zoom in & out buttons */}
                 <div className='flex items-center justify-center gap-1'>
-                    <CustomButton 
+                    {/* <CustomButton 
                         action={() => {
                             if(stage !== null){
                                 StageZoom(null, stage, 1);
                             } 
                         }} 
                         text="+" 
-                    />
+                    /> */}
                      <CustomButton 
                         action={() => {handleUndo()}} 
                         text="UNDO"
                     />
-                    <CustomButton 
+                    {/* <CustomButton 
                         action={() => {
                             if(stage !== null){
                                 StageZoom(null, stage, -1);
                             }
                         }} 
                         text="-"
-                    />
+                    /> */}
                 </div>
             </div>
     );
