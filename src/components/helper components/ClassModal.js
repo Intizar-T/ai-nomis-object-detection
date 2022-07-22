@@ -34,7 +34,7 @@ export default function ClassModal(props) {
 						if (value > 0 && value < 143) {
 							props.dispatch({ type: "INIT_LABELS", length: value });
 							props.dispatch({ type: "SET_LABELPROMPT", label: false });
-							props.dispatch({ type: "SET_POPUP", popup: true });
+							//props.dispatch({ type: "SET_POPUP", popup: true });
 						} else if (value <= 0) {
 							setValue(0);
 							alert("PLease enter valid number");

@@ -20,12 +20,17 @@ import {
 } from '@material-tailwind/react'
 
 import Breakpoints from "../helper functions/Breakpoints";
+import COCO_SSD from "../helper functions/COCO-SSD"
 
 function App() {
   const { state, dispatch } = useContext(Context);
   let fileLength = state.files.length;
   
 	const stageRef = React.useRef(null);
+	
+	useEffect(() => {
+	  COCO_SSD(state, dispatch);
+	}, [state.files]);
 
   /* attach a zoom in/out callback to the stage
    every time a stage changes */
@@ -71,12 +76,12 @@ function App() {
 
 	useEffect(() => {
     fileLength = state.files.length;
-		if(state.files.length > 0 && !state.labelPrompt) {
+		// if(state.files.length > 0 && !state.labelPrompt) {
 
-			if(state.rectangles[state.currentFileIndex].label === "not labeled"){
-				dispatch({ type: "SET_POPUP", popup: true });
-			}
-		}
+		// 	if(state.rectangles[state.currentFileIndex].label === "not labeled"){
+		// 		dispatch({ type: "SET_POPUP", popup: true });
+		// 	}
+		// }
 	}, [state.currentFileIndex]);
 
   const checkDeselect = (e) => {

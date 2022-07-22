@@ -43,7 +43,7 @@ const DownloadAll = async (state, dispatch, forDetection) => {
         const result = await Promise.all(promises);
         result.forEach(function(url, i) {
                 let imageName = url[0];
-
+                console.log(url);
                 if(forDetection){
                     //console.log(url[1]);
                     dispatch({ type: "UPDATE_IMAGE_URLS", URLs: url[1] });

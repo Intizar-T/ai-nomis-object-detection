@@ -49,8 +49,7 @@ const ProcessImages = (state, dispatch, files) => {
         dispatch({ type: "SET_FILES", files: data });
         dispatch({ type: "SET_CURRENT_FILE_INDEX", index: 0 });
         
-        DownloadAll(state, dispatch, true);
-        COCO_SSD(state.rectangles, state.imageURLs);
+        //DownloadAll(state, dispatch, true);
     });
 
     
