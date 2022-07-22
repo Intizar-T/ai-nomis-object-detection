@@ -127,8 +127,11 @@ function App() {
             <Card className='h-fit, w-fit border-2 border-blue-400'>
               <CardHeader
                 //color='blue'
-                className='h-16 flex items-center justify-center border-2 border-blue-400'
+                className='h-16 flex items-center justify-between border-2 border-blue-400'
               >
+                <Typography variant='h6' className='ml-2'>
+                  Label: {state.rectangles[state.currentFileIndex].label}
+                </Typography>
                 <Dropdown 
                   labels={state.labels} 
                   dispatch={dispatch}
