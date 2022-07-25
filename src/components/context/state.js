@@ -1,5 +1,4 @@
 const DEFAULT_STATE = {
-	boxes: {},
 	files: [],
 	originalImageSize: { width: 0, height: 0 },
 	currentFileIndex: 0,
