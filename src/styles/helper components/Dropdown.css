@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .dropdown {
+        @apply 
+            flex 
+            items-center 
+            justify-center 
+            z-40 
+            mr-2;
+    }
+}

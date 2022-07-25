@@ -1,6 +1,5 @@
 import JSZip from "jszip";
 import COCO_SSD from "./COCO-SSD";
-import DownloadAll from "../download/DownloadAll";
 
 const ProcessImages = (state, dispatch, files) => {
     function processFilename(p) {
@@ -40,7 +39,6 @@ const ProcessImages = (state, dispatch, files) => {
 
         return Promise.all(promises);
     });
-    //console.log()
     promise.then((data) => {
         const length = data.length;
         dispatch({ type: "INIT_RECTS", length });
@@ -48,12 +46,7 @@ const ProcessImages = (state, dispatch, files) => {
         dispatch({ type: "SET_LABELPROMPT", label: true });
         dispatch({ type: "SET_FILES", files: data });
         dispatch({ type: "SET_CURRENT_FILE_INDEX", index: 0 });
-        
-        //DownloadAll(state, dispatch, true);
     });
-
-    
-    
 }
 
 export default ProcessImages;

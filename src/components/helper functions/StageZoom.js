@@ -2,9 +2,6 @@ import React from "react";
 
 const StageZoom = (e, stage, dir) => {
     const scaleBy = 1.05;
-// stage.on('wheel', (e) => {
-//     e.evt.preventDefault();
-    //console.log(stage);
     const oldScale = stage.scaleX();
     const pointer = {
         x: stage.width() / 2,
@@ -23,11 +20,6 @@ const StageZoom = (e, stage, dir) => {
     else {
         direction = dir;
     }
-    
-
-    // when we zoom on trackpad, e.evt.ctrlKey is true
-    // in that case lets revert direction
-
     if (e && e.evt.ctrlKey) {
         direction = -direction;
     }
@@ -41,7 +33,6 @@ const StageZoom = (e, stage, dir) => {
         y: pointer.y - mousePointTo.y * newScale,
     };
     stage.position(newPos);
-//   });
 }
 
 export default StageZoom;

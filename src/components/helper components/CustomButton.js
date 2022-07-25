@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Context } from "../context/context";
 import { Button } from '@material-tailwind/react'
+import './../../styles/helper components/CustomButton.css'
 
 const CustomButton = (props) => {
     const { state, dispatch } = useContext(Context);
@@ -9,7 +10,7 @@ const CustomButton = (props) => {
             variant='filled' 
             size='lg'
             color={props.color}
-            className='text-white font-bold py-2 px-4 rounded'
+            className="customButton"
             onClick={(e) => {
                 if(props.pass_state){
                     props.action(state);

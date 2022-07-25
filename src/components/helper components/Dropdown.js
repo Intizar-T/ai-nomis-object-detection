@@ -5,11 +5,12 @@ import { Menu,
         MenuItem,
         Button } from "@material-tailwind/react";
 import { Context } from "../context/context";
+import './../../styles/helper components/Dropdown.css'
 
 export default function Dropdown({ labels, rects, currentFileIndex }) {
     const { state, dispatch } = useContext(Context);
     return (
-        <div className="flex items-center justify-center z-40 mr-2">
+        <div className="dropdown">
             <Menu>
                 <MenuHandler>
                     <Button variant="gradient">Select Label</Button>

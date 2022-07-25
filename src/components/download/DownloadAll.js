@@ -69,29 +69,6 @@ const DownloadAll = async (state, dispatch, forDetection) => {
     } catch(err) {
         console.error(err);
     }
-
-    
-
-   
-        /* const handleLoad = () => {
-            //console.log(image.width + ", " + image.height);
-            context.canvas.width = image.width;
-            context.canvas.height= image.height;
-            //con
-        }
-
-        image.addEventListener('load', handleLoad); */
-        
-        
-        //console.log(canvas);
-        
-        //document.body.removeChild(canvas);
-    
-    /* const nextButton = document.getElementById("nextButton");
-    nextButton.click();
-    console.log("pressed next, about to press prev");
-    const prevButton = document.getElementById("prevButton");
-    prevButton.click(); */
 };
 
 export default DownloadAll;
