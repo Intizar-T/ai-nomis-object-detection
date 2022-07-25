@@ -1,15 +1,8 @@
-import React, { useEffect } from 'react';
 import { useContext } from "react";
-import Popup from "../helper components/Popup";
-import ClassModal from "../helper components/ClassModal";
 import { Stage, Layer } from 'react-konva';
-import { Html } from 'react-konva-utils'
 import Rectangle from "../helper components/Rectangle"
 import RenderImage from "../helper components/RenderImage";
 import { Context } from "../context/context";
-import {
-    Typography
-} from "@material-tailwind/react"
 
 const Main = (props) => {
     const { state, dispatch } = useContext(Context);
@@ -47,9 +40,7 @@ const Main = (props) => {
                     shapeProps={state.rectangles[state.currentFileIndex]}
                     isSelected={state.rectangles[state.currentFileIndex].id === state.selectedRectId}
                     onSelect={() => {
-                        //console.log(state.rectangles[state.currentFileIndex].id);
                         dispatch({ type: "SET_SELECTED_RECT_ID", id: state.rectangles[state.currentFileIndex].id});
-                        //console.log("current rect id = " + state.selectedRectId);
                     }}
                     onChange={(newAttrs) => {
                         updateHistory();

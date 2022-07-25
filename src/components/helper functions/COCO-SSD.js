@@ -9,8 +9,6 @@ const COCO_SSD = async (state, dispatch) => {
         console.log("COCO-SSD loaded!");
         
         const images = await Images(state.files);
-        console.log("imageURLs loaded:" + images);
-        
         const rects = state.rectangles;
         
         images.forEach(async (image, i) => {
@@ -28,7 +26,7 @@ const COCO_SSD = async (state, dispatch) => {
             rect.label = label;
             
             rects[i] = rect;
-            //console.log(rect);
+            
             dispatch({ type: "UPDATE_RECTS",  rects: rects});
         });
     }

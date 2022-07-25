@@ -58,37 +58,10 @@ const Reducer = (state, action) => {
 				...state,
 				rectangles: action.rects,
 			};
-		/* case "UPDATE_RECT":	//after changing the history / pressing the UNDO button
-			return {
-				...state,
-				rectangles
-			} */
-		case "SET_MOUSE":
-			return {
-				...state,
-				mouseX: action.mouseX,
-				mouseY: action.mouseY,
-			};
-		case "SET_POPUP":
-			return {
-				...state,
-				popup: action.popup,
-			};
-		case "SET_START":
-			return {
-				...state,
-				startX: action.startX,
-				startY: action.startY,
-			};
 		case "SET_FILES":
 			return {
 				...state,
 				files: action.files,
-			};
-		case "SET_CLICKED_AREA":
-			return {
-				...state,
-				clickedArea: action.clickedArea,
 			};
 		case "SET_CURRENT_FILE_INDEX":
 			return {
@@ -131,20 +104,10 @@ const Reducer = (state, action) => {
 				...state,
 				boxes: { ...state.boxes, currentFileIndex: action.boxes },
 			};
-		case "SET_DRAWING":
-			return {
-				...state,
-				isDrawing: action.isDrawing,
-			};
 		case "SET_BOXDRAWN":
 			return {
 				...state,
 				boxDrawn: action.boxDrawn,
-			};
-		case "SET_MOUSEMOVE":
-			return {
-				...state,
-				didMouseMove: action.didMouseMove,
 			};
 		case "SET_ORIGINAL_IMAGE_SIZE":
 			return {
@@ -161,11 +124,6 @@ const Reducer = (state, action) => {
 			...state,
 			stage: action.stage,
 		};
-		case "SET_CURRENT_IMAGE_SIZE":
-			return {
-				...state,
-				currentImageSize: action.size,
-			};
 		case "NEXT_FILE":
 			return {
 				...state,
@@ -187,11 +145,6 @@ const Reducer = (state, action) => {
 				...state,
 				files: arr,
 			};
-		case "LABEL_IMAGES":
-			state.boxedImages.push(action.lbl_img);
-			return {
-				...state,
-			}
 		case "SET_SCREEN_SIZE":
 			return {
 				...state,

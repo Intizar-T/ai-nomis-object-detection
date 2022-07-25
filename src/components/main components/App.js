@@ -6,9 +6,9 @@ import Main from "./Main";
 import InternalFooter from "./InternalFooter";
 import OuterFooter from "./OuterFooter";
 import CustomButton from "../helper components/CustomButton";
-import ProcessImages from "../helper functions/ProcessImages";
 import ClassModal from "../helper components/ClassModal";
 import Dropdown from "../helper components/Dropdown";
+import LandingPage from "./LandingPage";
 //import StageZoom from "../helper functions/StageZoom";
 
 import {
@@ -24,9 +24,7 @@ import COCO_SSD from "../helper functions/COCO-SSD"
 
 function App() {
   const { state, dispatch } = useContext(Context);
-  let fileLength = state.files.length;
-  
-	const stageRef = React.useRef(null);
+  const stageRef = React.useRef(null);
 	
 	useEffect(() => {
 	  COCO_SSD(state, dispatch);
@@ -72,17 +70,7 @@ function App() {
     return () => {
       window.removeEventListener('resize', handleResize);
     }
-  }, [])
-
-	useEffect(() => {
-    fileLength = state.files.length;
-		// if(state.files.length > 0 && !state.labelPrompt) {
-
-		// 	if(state.rectangles[state.currentFileIndex].label === "not labeled"){
-		// 		dispatch({ type: "SET_POPUP", popup: true });
-		// 	}
-		// }
-	}, [state.currentFileIndex]);
+  }, []);
 
   const checkDeselect = (e) => {
     try {
@@ -119,7 +107,7 @@ function App() {
           <ClassModal dispatch={dispatch} />
         )}
 
-        {fileLength > 0 ? (
+        {state.files.length > 0 ? (
           <>
             <CustomButton 
               action={() => {}} 
@@ -141,8 +129,7 @@ function App() {
                   labels={state.labels} 
                   dispatch={dispatch}
                   rects={state.rectangles} 
-                  currentFileIndex={state.currentFileIndex} 
-                  popup={state.popup}
+                  currentFileIndex={state.currentFileIndex}
                 />
               </CardHeader>
               <CardBody
@@ -169,31 +156,7 @@ function App() {
           </>
         ) : (
           <Card className="flex justify-center items-center w-full h-full">
-            <label 
-                htmlFor="dropzone-file" 
-                className="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                <div className="flex flex-col justify-center items-center pt-5 pb-6">
-                    <svg aria-hidden="true" className="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                    <Typography variant={Breakpoints(state.screenSize) === 'sm' ? 'h5' : 'h3'}>
-                      Click to upload
-                    </Typography>
-                    <Typography className={Breakpoints(state.screenSize) === 'sm' ? "text-sm dark:text-white" : "text-lg dark:text-white"}>
-                      or drag and drop
-                    </Typography>
-                    <Typography className={Breakpoints(state.screenSize) === 'sm' ? "text-sm dark:text-white" : "text-lg dark:text-white"}>
-                      Please, zip your images to upload!
-                    </Typography>
-                </div>
-                <input 
-                id="dropzone-file" 
-                type="file" 
-                className="hidden"  
-                onChange={(e) => {
-                    ProcessImages(state, dispatch, e.target.files);
-                }}
-                accept=".zip,.rar,.7zip"
-                />
-            </label>
+            <LandingPage />
           </Card>
         )}
       </CardBody>
@@ -202,7 +165,7 @@ function App() {
         divider
         className="flex flex-row items-center justify-center h-16" 
       >
-        {fileLength > 0 ? (
+        {state.files.length > 0 ? (
           <OuterFooter />
         ) : (
           <Typography className={Breakpoints(state.screenSize) === 'sm' ? "text-sm dark:text-white" : "text-lg dark:text-white"}>
