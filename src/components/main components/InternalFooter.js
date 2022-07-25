@@ -48,6 +48,14 @@ const InternalFooter = ({ handleExport }) => {
 
                 {/* Prev, Next, Undo, Zoom in & out buttons */}
                 <div className='undoButton'>
+                    <CustomButton 
+                      action={() => {}} 
+                      text="PREV" 
+                      pass_dispatch={true} 
+                      dispatch_info={{type: "PREV_FILE"}}
+                      //color="orange"
+                      id="prevButton"
+                    />
                     {/* <CustomButton 
                         action={() => {
                             if(stage !== null){
@@ -68,6 +76,14 @@ const InternalFooter = ({ handleExport }) => {
                         }} 
                         text="-"
                     /> */}
+                     <CustomButton 
+                        action={() => {}} 
+                        text="NEXT" 
+                        pass_dispatch={true} 
+                        dispatch_info={{type: "NEXT_FILE"}}
+                        //color="orange"
+                        id="nextButton"
+                     />
                 </div>
             </div>
     );

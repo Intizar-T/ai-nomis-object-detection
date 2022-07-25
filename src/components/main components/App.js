@@ -108,50 +108,32 @@ function App() {
         )}
 
         {state.files.length > 0 ? (
-          <>
-            <CustomButton 
-              action={() => {}} 
-              text="PREV" 
-              pass_dispatch={true} 
-              dispatch_info={{type: "PREV_FILE"}}
-              color="orange"
-              id="prevButton"
-            />
-            <Card className="canvas">
-              <CardHeader
-                className='canvasHeader'
-              >
-                <Typography variant='h6' className='ml-2'>
-                  Label: {state.rectangles[state.currentFileIndex].label}
-                </Typography>
-                <Dropdown 
-                  labels={state.labels} 
-                  dispatch={dispatch}
-                  rects={state.rectangles} 
-                  currentFileIndex={state.currentFileIndex}
-                />
-              </CardHeader>
-              <CardBody
-                className='canvasBody'
-              >
-                <Main checkDeselect={checkDeselect} stageRef={stageRef}/>
-              </CardBody>
-              <CardFooter
-                divider
-                className='canvasFooter'
-              >
-                <InternalFooter handleExport={handleExport}/>
-              </CardFooter>
-            </Card>
-            <CustomButton 
-                action={() => {}} 
-                text="NEXT" 
-                pass_dispatch={true} 
-                dispatch_info={{type: "NEXT_FILE"}}
-                color="orange"
-                id="nextButton"
+          <Card className="canvas">
+            <CardHeader
+              className='canvasHeader'
+            >
+              <Typography variant='h6' className='ml-2'>
+                Label: {state.rectangles[state.currentFileIndex].label}
+              </Typography>
+              <Dropdown 
+                labels={state.labels} 
+                dispatch={dispatch}
+                rects={state.rectangles} 
+                currentFileIndex={state.currentFileIndex}
               />
-          </>
+            </CardHeader>
+            <CardBody
+              className='canvasBody'
+            >
+              <Main checkDeselect={checkDeselect} stageRef={stageRef}/>
+            </CardBody>
+            <CardFooter
+              divider
+              className='canvasFooter'
+            >
+              <InternalFooter handleExport={handleExport}/>
+            </CardFooter>
+          </Card>
         ) : (
           <Card className="landingPage">
             <LandingPage />
