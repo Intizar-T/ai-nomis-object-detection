@@ -28,11 +28,8 @@ const DownloadAll = async (state, dispatch, forDetection) => {
                         context.strokeRect(currRect.x, currRect.y, currRect.width, currRect.height);
 
                     }
-                    
-                    // URLs.push([file[0], canvas.toDataURL()]);
                     resolve([file[0], canvas.toDataURL()]);
                 } catch(err){
-                    // do something;
                     reject(err);
                 }
             }
@@ -43,9 +40,7 @@ const DownloadAll = async (state, dispatch, forDetection) => {
         const result = await Promise.all(promises);
         result.forEach(function(url, i) {
                 let imageName = url[0];
-                console.log(url);
                 if(forDetection){
-                    //console.log(url[1]);
                     dispatch({ type: "UPDATE_IMAGE_URLS", URLs: url[1] });
                 }
 

@@ -1,5 +1,5 @@
- - in Zoom Out -> make sure the rect doesn't go out of the image
- - in Zoom in -> make sure the rect stays within the stage boundaries
- - in Zoom in/out -> update the history (for undo and prev/next)
- - if label is not selected, "Select Label" should be shown on the dropdown
+ ISSUE CREATED: 7/25/2022
+ - rectangles are not moving inside the canvas freely (boundaries are problematic)
+ - change the initial rectangle coordinates to the auto generated ones (esp make sure history is consistent)
  - 
+ 

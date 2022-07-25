@@ -1,4 +1,3 @@
-import React from "react";
 import { useContext } from "react";
 import { Context } from "../context/context";
 import { Typography } from "@material-tailwind/react";

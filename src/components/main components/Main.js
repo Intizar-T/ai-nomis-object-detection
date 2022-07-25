@@ -31,9 +31,8 @@ const Main = (props) => {
             style={{
                 margin: 10,
             }}
-            name="canvas"
         >
-            <Layer id="layer">
+            <Layer>
                 <RenderImage URL={state.files[state.currentFileIndex][1]} dispatch={dispatch}/>
                 <Rectangle
                     key={state.rectangles[state.currentFileIndex].id}

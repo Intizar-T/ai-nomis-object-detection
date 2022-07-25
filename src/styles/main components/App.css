@@ -3,7 +3,78 @@
 @tailwind utilities;
 
 @layer components {
-    .bodyHeader {
+    .mainHeader {
         @apply 
+            h-24 
+            flex 
+            items-center 
+            justify-center 
+            border-2 
+            border-blue-400;
+    }
+    
+    .mainBody {
+        @apply 
+            w-screen 
+            h-full 
+            flex 
+            flex-row 
+            content-between 
+            items-center 
+            justify-center 
+            gap-4;
+    }
+    
+    .mainFooter {
+        @apply
+            flex 
+            flex-row 
+            items-center 
+            justify-center 
+            h-16;
+    }
+    
+    .canvas {
+        @apply
+            h-fit 
+            w-fit 
+            border-2 
+            border-blue-400;
+    }
+    
+    .canvasHeader {
+        @apply
+            h-16 
+            flex 
+            items-center 
+            justify-between 
+            border-2 
+            border-blue-400;
+    }
+    
+    .canvasBody {
+        @apply
+            w-full 
+            h-full 
+            flex 
+            items-center 
+            justify-center;
+    }
+    
+    .canvasFooter {
+        @apply
+            flex 
+            items-center 
+            justify-center 
+            space-x-2;
+    }
+    
+    .landingPage {
+        @apply
+            flex 
+            justify-center 
+            items-center 
+            w-full 
+            h-full;
     }
 }

@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .downloadButtons {
+        @apply 
+            flex
+            items-center
+            justify-center
+            gap-1 
+            mb-2;
+    }
+    
+    .undoButton {
+        @apply
+            flex
+            items-center
+            justify-center
+            gap-1;
+    }
+}

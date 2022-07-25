@@ -6,15 +6,11 @@ module.exports = withMT({
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  
   theme: {
-    //screens: require("./src/components/helper functions/tailwind.screens"),
-    extend: {
-      /* screens: {
-        'xs': '320px',
-        ...defaultTheme.screens,
-      }, */
-    },
+    extend: {},
   },
-  plugins: [
-  ],
+  
+  plugins: [],
+  
 });
