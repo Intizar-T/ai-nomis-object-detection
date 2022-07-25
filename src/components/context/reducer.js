@@ -85,11 +85,6 @@ const Reducer = (state, action) => {
 				...state,
 				boxes: { ...state.boxes, currentFileIndex: b },
 			};
-		case "SET_TMP_BOX":
-			return {
-				...state,
-				tmpBox: action.tmpBox,
-			};
 		case "POP_BOX":
 			const temp_arr = state.boxes[action.index];
 			if (temp_arr.length > 0) {
@@ -150,31 +145,15 @@ const Reducer = (state, action) => {
 				...state,
 				screenSize: action.size,
 			}
-		case "SET_RECT_SELECTED":
-			return {
-				...state,
-				rectSelected: action.selected,
-			}
 		case "SET_SELECTED_RECT_ID":
 			return {
 				...state,
 				selectedRectId: action.id,
 			}
-		case "SET_IMAGE_URLS":
-			return {
-				...state,
-				imageURLs: action.URLs,
-				currentFileIndex: action.index,
-			}
 		case "UPDATE_IMAGE_URLS":
 			return {
 				...state,
 				imageURLs: action.URLs,
-			}
-		case "UPDATE_DOWNLOAD_ALL_PUSHED":
-			return {
-				...state,
-				downloadAllPushed: action.pushed,
 			}
 		default:
 			return state;
