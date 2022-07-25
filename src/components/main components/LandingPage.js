@@ -38,13 +38,13 @@ const LandingPage = () => {
                 </Typography>
             </div>
             <input 
-            id="dropzone-file" 
-            type="file" 
-            className="hidden"  
-            onChange={(e) => {
-                ProcessImages(state, dispatch, e.target.files);
-            }}
-            accept=".zip,.rar,.7zip"
+                id="dropzone-file" 
+                type="file" 
+                className="hidden"  
+                onChange={(e) => {
+                    ProcessImages(state, dispatch, e);
+                }}
+                accept=".zip,.rar,.7zip,.jpg,.png,.gif,.ps,.jpeg,.webp"
             />
         </label>
     );
