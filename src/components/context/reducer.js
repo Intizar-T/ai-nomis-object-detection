@@ -77,6 +77,18 @@ const Reducer = (state, action) => {
 			...state,
 			stage: action.stage,
 		};
+		case "SET_KEYWORD":
+			return {
+				...state,
+				imageKeyword: action.keyword,
+				//imageCount: action.count,
+			}
+		case "SET_COUNT":
+			return {
+				...state,
+				//imageKeyword: action.keyword,
+				imageCount: action.count,
+			}
 		case "NEXT_FILE":
 			return {
 				...state,

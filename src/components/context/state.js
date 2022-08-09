@@ -10,6 +10,8 @@ const DEFAULT_STATE = {
 	imageURLs: [],
 	stageSize: {width: 0, height: 0},
 	stage: null,
+	imageKeyword: "",
+	imageCount: 0
 };
 
 export default DEFAULT_STATE;

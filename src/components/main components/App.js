@@ -1,15 +1,13 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState, useCallback, useRef } from "react";
 import { Context } from "../context/context";
 import DownloadImage from "../download/DownloadImage";
 import Header from "./Header";
 import Main from "./Main";
 import InternalFooter from "./InternalFooter";
 import OuterFooter from "./OuterFooter";
-import CustomButton from "../helper components/CustomButton";
 import ClassModal from "../helper components/ClassModal";
 import Dropdown from "../helper components/Dropdown";
 import LandingPage from "./LandingPage";
-//import StageZoom from "../helper functions/StageZoom";
 import './../../styles/main components/App.css'
 
 import {
@@ -22,9 +20,15 @@ import {
 
 import COCO_SSD from "../helper functions/COCO-SSD"
 
+const URL = 'wss://onedv62i9e.execute-api.ap-northeast-2.amazonaws.com/production'
+
 function App() {
   const { state, dispatch } = useContext(Context);
-  const stageRef = React.useRef(null);
+  const stageRef = useRef(null);
+  const socket = useRef(null);
+  
+  const [isConnected, setIsConnected] = useState(false);
+  const sendLambdaRequest = isConnected && state.imageKeyword !== "" && state.imageCount !== 0;
 	
 	useEffect(() => {
 	  COCO_SSD(state, dispatch);
@@ -51,10 +55,6 @@ function App() {
     }
   }, [stageRef.current]);
 
-  const handleExport = () => {
-    const uri = stageRef.current.toDataURL();
-    DownloadImage(state, uri);
-  };
 
   /* Change the window size in the state every time
   the window resizes (for responsiveness) -> needs to be
@@ -72,6 +72,11 @@ function App() {
     }
   }, []);
 
+  const handleExport = () => {
+    const uri = stageRef.current.toDataURL();
+    DownloadImage(state, uri);
+  };
+  
   const checkDeselect = (e) => {
     try {
       const stage = e.target.getStage();
@@ -87,6 +92,53 @@ function App() {
       }
     }
   }
+  
+  const onSocketOpen = useCallback((keyword, count) => {
+    setIsConnected(true);
+    console.log("Connected to the WebSocket");
+  }, []);
+  
+  const onSocketClose = useCallback(() => {
+    setIsConnected(false);
+    console.log("Disconnected from the Websocket");
+  }, []);
+  
+  const onSocketMessage = useCallback((data) => {
+    const urls = JSON.parse(data["data"]);
+    console.log(urls["imageURLs"]);
+    // onDisconnect();
+  }, []);
+
+  const onConnect = useCallback(() => {
+    if(socket.current?.readyState !== WebSocket.OPEN) {
+      socket.current = new WebSocket(URL);
+      socket.current.addEventListener('open', onSocketOpen)
+      socket.current.addEventListener('close', onSocketClose);
+      socket.current.addEventListener('message', onSocketMessage);
+    }
+  }, []);
+  
+  // const onDisconnect = useCallback(() => {
+  //   console.log("Is connection open now: " +  isConnected);
+  //   if(isConnected) {
+  //     socket.current?.close();
+  //     console.log("Closed the connection: " + WebSocket.CLOSED);
+  //   }
+  // }, []);
+  
+  useEffect(() => {
+    console.log("Sending a request now...")
+    socket.current?.send(JSON.stringify({
+      "action": "getImages",
+      "message": {
+        "keyword": state.imageKeyword,
+        "count": state.imageCount
+      }
+    }));
+    // console.log(state.imageKeyword + " " + state.imageCount);
+    // console.log("connection result: " + socket.current?.readyState);
+      
+  }, [sendLambdaRequest]);
 
   return (
     <Card 
@@ -103,8 +155,8 @@ function App() {
       <CardBody 
         className="mainBody"
       >
-         {state.labelPrompt && (
-          <ClassModal dispatch={dispatch} />
+        {state.labelPrompt && (
+          <ClassModal dispatch={dispatch} onConnect={onConnect}/>
         )}
 
         {state.files.length > 0 ? (
