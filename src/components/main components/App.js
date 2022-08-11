@@ -29,7 +29,7 @@ function App() {
   const socket = useRef(null);
   
   const [isConnected, setIsConnected] = useState(false);
-  const sendLambdaRequest = isConnected && state.imageKeyword !== "" && state.imageCount !== 0;
+  //const sendLambdaRequest = isConnected && state.imageKeyword !== "" && state.imageCount !== 0;
 	
 	useEffect(() => {
 	  COCO_SSD(state, dispatch);
@@ -94,7 +94,7 @@ function App() {
     }
   }
   
-  const onSocketOpen = useCallback((keyword, count) => {
+  const onSocketOpen = useCallback(() => {
     setIsConnected(true);
     console.log("Connected to the WebSocket");
   }, []);
@@ -106,7 +106,11 @@ function App() {
   
   const onSocketMessage = useCallback((data) => {
     const urls = JSON.parse(data["data"]);
-    ProcessImages(state, dispatch, urls["imageURLs"], true);
+    ProcessImages(state, dispatch, urls["imageURLs"], socket, true);
+    // console.log("connection status now: "+ socket.current?.readyState)
+    // console.log("trying to close the connection...");
+    // socket.current?.close();
+    // console.log("Connection closed: " + socket.current?.readyState);
   }, []);
 
   const onConnect = useCallback(() => {
@@ -119,15 +123,17 @@ function App() {
   }, []);
   
   useEffect(() => {
-    console.log("Sending a request now...")
-    socket.current?.send(JSON.stringify({
-      "action": "getImages",
-      "message": {
-        "keyword": state.imageKeyword,
-        "count": state.imageCount
-      }
-    }));
-  }, [sendLambdaRequest]);
+    if(isConnected) {
+      console.log("Sending a request now...")
+      socket.current?.send(JSON.stringify({
+        "action": "getImages",
+        "message": {
+          "keyword": state.imageKeyword,
+          "count": state.imageCount
+        }
+      }));
+    }
+  }, [isConnected]);
 
   return (
     <Card 

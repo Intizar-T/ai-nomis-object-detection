@@ -16,9 +16,20 @@ function processFilename(p) {
     return name;
 }
 
-const ProcessImages = async (state, dispatch, e, imagesScraped) => {
+const ProcessImages = async (state, dispatch, e, socket, imagesScraped) => {
     if(imagesScraped){
-        console.log(e);;
+        //console.log(e);
+        const data = [];
+        for(let i = 0; i < e.length; i++) {
+            data.push([i, e[i]]);
+        }
+        const length = data.length;
+        dispatch({ type: "INIT_RECTS", length });
+        dispatch({ type: "INIT_BOXES", length });
+        //dispatch({ type: "SET_LABELPROMPT", label: true });
+        dispatch({ type: "SET_FILES", files: data });
+        dispatch({ type: "SET_CURRENT_FILE_INDEX", index: 0 });
+        socket.current?.close();
     }
     else {
         const files = e.target.files;
@@ -66,18 +77,18 @@ const ProcessImages = async (state, dispatch, e, imagesScraped) => {
             });
         };
         
-        if(imageExtensions.includes(fileExtension)){
-            const blob = new Blob(files);
-            //console.log(blob);
-            const url = URL.createObjectURL(blob);
-            const data = [[files[0].name, url]];
-            const length = data.length;
-            dispatch({ type: "INIT_RECTS", length });
-            dispatch({ type: "INIT_BOXES", length });
-            dispatch({ type: "SET_LABELPROMPT", label: true });
-            dispatch({ type: "SET_FILES", files: data });
-            dispatch({ type: "SET_CURRENT_FILE_INDEX", index: 0 });
-        }
+        // if(imageExtensions.includes(fileExtension)){
+        //     const blob = new Blob(files);
+        //     //console.log(blob);
+        //     const url = URL.createObjectURL(blob);
+        //     const data = [[files[0].name, url]];
+        //     const length = data.length;
+        //     dispatch({ type: "INIT_RECTS", length });
+        //     dispatch({ type: "INIT_BOXES", length });
+        //     dispatch({ type: "SET_LABELPROMPT", label: true });
+        //     dispatch({ type: "SET_FILES", files: data });
+        //     dispatch({ type: "SET_CURRENT_FILE_INDEX", index: 0 });
+        // }
     }
 }
 
