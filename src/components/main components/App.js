@@ -8,7 +8,8 @@ import OuterFooter from "./OuterFooter";
 import ClassModal from "../helper components/ClassModal";
 import Dropdown from "../helper components/Dropdown";
 import LandingPage from "./LandingPage";
-import './../../styles/main components/App.css'
+import ProcessImages from "../helper functions/ProcessImages";
+import './../../styles/main components/App.css';
 
 import {
   Card,
@@ -105,8 +106,7 @@ function App() {
   
   const onSocketMessage = useCallback((data) => {
     const urls = JSON.parse(data["data"]);
-    console.log(urls["imageURLs"]);
-    // onDisconnect();
+    ProcessImages(state, dispatch, urls["imageURLs"], true);
   }, []);
 
   const onConnect = useCallback(() => {
@@ -118,14 +118,6 @@ function App() {
     }
   }, []);
   
-  // const onDisconnect = useCallback(() => {
-  //   console.log("Is connection open now: " +  isConnected);
-  //   if(isConnected) {
-  //     socket.current?.close();
-  //     console.log("Closed the connection: " + WebSocket.CLOSED);
-  //   }
-  // }, []);
-  
   useEffect(() => {
     console.log("Sending a request now...")
     socket.current?.send(JSON.stringify({
@@ -135,9 +127,6 @@ function App() {
         "count": state.imageCount
       }
     }));
-    // console.log(state.imageKeyword + " " + state.imageCount);
-    // console.log("connection result: " + socket.current?.readyState);
-      
   }, [sendLambdaRequest]);
 
   return (
@@ -159,25 +148,34 @@ function App() {
           <ClassModal dispatch={dispatch} onConnect={onConnect}/>
         )}
 
-        {state.files.length > 0 ? (
           <Card className="canvas">
-            <CardHeader
-              className='canvasHeader'
-            >
-              <Typography variant='h6' className='ml-2'>
-                Label: {state.rectangles[state.currentFileIndex].label}
-              </Typography>
-              <Dropdown 
-                labels={state.labels} 
-                dispatch={dispatch}
-                rects={state.rectangles} 
-                currentFileIndex={state.currentFileIndex}
-              />
-            </CardHeader>
+            {state.files.length > 0 ? (
+              <CardHeader
+                className='canvasHeader'
+              >
+                <Typography variant='h6' className='ml-2'>
+                  Label: {state.rectangles[state.currentFileIndex].label}
+                </Typography>
+                <Dropdown 
+                  labels={state.labels} 
+                  dispatch={dispatch}
+                  rects={state.rectangles} 
+                  currentFileIndex={state.currentFileIndex}
+                />
+              </CardHeader>
+            ) : (
+              <CardHeader className='canvasHeaderInitial'>
+                <Typography variant='h5'>Select or scrape your images!</Typography>
+              </CardHeader>
+            )}
             <CardBody
               className='canvasBody'
             >
+              {state.files.length > 0 ? (
               <Main checkDeselect={checkDeselect} stageRef={stageRef}/>
+              ) : (
+                <LandingPage />
+              )}
             </CardBody>
             <CardFooter
               divider
@@ -186,11 +184,7 @@ function App() {
               <InternalFooter handleExport={handleExport}/>
             </CardFooter>
           </Card>
-        ) : (
-          <Card className="landingPage">
-            <LandingPage />
-          </Card>
-        )}
+        
       </CardBody>
       
       <CardFooter 

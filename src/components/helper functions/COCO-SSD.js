@@ -4,12 +4,16 @@ import * as cocossd from "@tensorflow-models/coco-ssd";
 const COCO_SSD = async (state, dispatch) => {
     if(state.files.length > 0){
         const net  = await cocossd.load();
+        
         const images = await Images(state.files);
         const rects = state.rectangles;
         
         images.forEach(async (image, i) => {
             let rect = rects[i];
             const prediction = await net.detect(image);
+            //console.log(prediction);
+            
+            if (prediction.length === 0) return;
             
             const [x, y, width, height] = prediction[0]['bbox'];
             const label = prediction[0]['class'];

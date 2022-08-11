@@ -15,7 +15,7 @@ export default function ClassModal(props) {
 	return (
 		<Dialog open={true}>
 			<DialogHeader>
-				Enter a keyword and number of images:
+				Enter image keyword:
 			</DialogHeader>
 			<DialogBody>
 				<Input
@@ -28,6 +28,9 @@ export default function ClassModal(props) {
 					}}
 				/>
 			</DialogBody>
+			<DialogHeader>
+				Enter image count:
+			</DialogHeader>
 			<DialogBody>
 				<Input
 					variant="outlined"

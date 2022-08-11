@@ -31,9 +31,6 @@ const LandingPage = () => {
                   Click to upload
                 </Typography>
                 <Typography className={Breakpoints(state.screenSize) === 'sm' ? "text-sm dark:text-white" : "text-lg dark:text-white"}>
-                  or drag and drop
-                </Typography>
-                <Typography className={Breakpoints(state.screenSize) === 'sm' ? "text-sm dark:text-white" : "text-lg dark:text-white"}>
                   Please, zip your images to upload!
                 </Typography>
             </div>
@@ -42,7 +39,7 @@ const LandingPage = () => {
                 type="file" 
                 className="hidden"  
                 onChange={(e) => {
-                    ProcessImages(state, dispatch, e);
+                    ProcessImages(state, dispatch, e, false);
                 }}
                 accept=".zip,.rar,.7zip,.jpg,.png,.gif,.ps,.jpeg,.webp"
             />

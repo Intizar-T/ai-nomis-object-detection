@@ -25,11 +25,24 @@ const OuterFooter = () => {
                      text = "Download All .txt"
                      color="green"
                />
+                <CustomButton
+                    action={() => {
+                            dispatch({ type: "SET_LABELPROMPT", label: true });
+                        }
+                    }
+                    text="Scrape Images"
+                    color="green"
+                />
             </div>
         ) : (
-            <Typography className={Breakpoints(state.screenSize) === 'sm' ? "text-sm dark:text-white" : "text-lg dark:text-white"}>
-              Brought to you by AI-NOMIS's "NoCodingAI" team
-            </Typography>
+            <CustomButton 
+                action={() => {
+                        dispatch({ type: "SET_LABELPROMPT", label: true });
+                    }
+                }
+                text="Scrape Images"
+                color="green"
+            />
         )
         
     );

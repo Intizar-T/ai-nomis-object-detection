@@ -52,6 +52,16 @@
             border-blue-400;
     }
     
+    .canvasHeaderInitial {
+        @apply
+            h-16
+            flex
+            items-center
+            justify-center
+            border-2 
+            border-blue-400;
+    }
+    
     .canvasBody {
         @apply
             w-full 
