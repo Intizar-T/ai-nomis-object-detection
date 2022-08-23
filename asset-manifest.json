@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/ai-nomis-object-detection/static/css/main.38107389.css",
-    "main.js": "/ai-nomis-object-detection/static/js/main.b7671a75.js",
+    "main.css": "/ai-nomis-object-detection/static/css/main.e9333e4c.css",
+    "main.js": "/ai-nomis-object-detection/static/js/main.bbb2be04.js",
     "index.html": "/ai-nomis-object-detection/index.html",
-    "main.38107389.css.map": "/ai-nomis-object-detection/static/css/main.38107389.css.map",
-    "main.b7671a75.js.map": "/ai-nomis-object-detection/static/js/main.b7671a75.js.map"
+    "main.e9333e4c.css.map": "/ai-nomis-object-detection/static/css/main.e9333e4c.css.map",
+    "main.bbb2be04.js.map": "/ai-nomis-object-detection/static/js/main.bbb2be04.js.map"
   },
   "entrypoints": [
-    "static/css/main.38107389.css",
-    "static/js/main.b7671a75.js"
+    "static/css/main.e9333e4c.css",
+    "static/js/main.bbb2be04.js"
   ]
 }
