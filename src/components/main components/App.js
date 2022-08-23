@@ -1,4 +1,5 @@
-import React, { useEffect, useContext, useState, useCallback, useRef } from "react";
+import { useEffect, useContext, useState, useCallback, useRef } from "react";
+import axios from "axios";
 import { Context } from "../context/context";
 import DownloadImage from "../download/DownloadImage";
 import Header from "./Header";
@@ -29,8 +30,8 @@ function App() {
   const socket = useRef(null);
   
   const [isConnected, setIsConnected] = useState(false);
-  //const sendLambdaRequest = isConnected && state.imageKeyword !== "" && state.imageCount !== 0;
-	
+  // const [bucketUrl, setBucketUrl] = useState("");
+  	
 	useEffect(() => {
 	  COCO_SSD(state, dispatch);
 	}, [state.files]);
@@ -105,8 +106,9 @@ function App() {
   }, []);
   
   const onSocketMessage = useCallback((data) => {
-    const urls = JSON.parse(data["data"]);
-    ProcessImages(state, dispatch, urls["imageURLs"], socket, true);
+    const url = JSON.parse(data["data"]);
+    // setBucketUrl(url);
+    ProcessImages(state, dispatch, url["imageURLs"], socket, true);
     // console.log("connection status now: "+ socket.current?.readyState)
     // console.log("trying to close the connection...");
     // socket.current?.close();
@@ -134,6 +136,20 @@ function App() {
       }));
     }
   }, [isConnected]);
+  
+  // useEffect(() => {
+  //   // const url = bucketUrl;
+  //   if(bucketUrl !== ""){
+  //     console.log(bucketUrl)
+  //     axios.get(bucketUrl)
+  //       .then((response) => {
+  //         console.log("received smth");
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //       });
+  //     }
+  // }, [bucketUrl]);
 
   return (
     <Card 
