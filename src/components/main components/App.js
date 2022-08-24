@@ -105,8 +105,16 @@ function App() {
     console.log("Disconnected from the Websocket");
   }, []);
   
-  const onSocketMessage = useCallback((data) => {
-    const url = JSON.parse(data["data"]);
+  const onSocketMessage = useCallback(async (data) => {
+    const url = await JSON.parse(data["data"]);
+    // console.log(url['imageURLs'])
+    // axios.get(url['imageURLs'])
+    //   .then(res => {
+    //       console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.log(err); 
+    //   });
     // setBucketUrl(url);
     ProcessImages(state, dispatch, url["imageURLs"], socket, true);
     // console.log("connection status now: "+ socket.current?.readyState)
@@ -156,12 +164,13 @@ function App() {
       className="w-screen h-screen"
       onMouseDown={(e) => checkDeselect(e)}  
     >
-      <CardHeader 
+      {/*<CardHeader 
         className="mainHeader" 
         floated={false}
       >
         <Header />
       </CardHeader>
+      */}
       
       <CardBody 
         className="mainBody"
