@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Stage, Layer } from 'react-konva';
 import Rectangle from "../helper components/Rectangle"
 import RenderImage from "../helper components/RenderImage";
@@ -6,6 +6,7 @@ import { Context } from "../context/context";
 
 const Main = (props) => {
     const { state, dispatch } = useContext(Context);
+    const [stageSize, setStageSize] = useState({width: 200, height: 200});
 
     const updateHistory = () => {
         const curr_index = state.currentFileIndex;
@@ -23,8 +24,8 @@ const Main = (props) => {
 
     return(
         <Stage
-            width={state.originalImageSize.width}
-            height={state.originalImageSize.height}
+            width={stageSize.width} //{state.originalImageSize.width}
+            height={stageSize.height} //{state.originalImageSize.height}
             onMouseDown={(e) => props.checkDeselect(e)}
             onTouchStart={(e) => props.checkDeselect(e)}
             ref={props.stageRef}
@@ -47,8 +48,8 @@ const Main = (props) => {
                         rects[state.rectangles[state.currentFileIndex].id] = newAttrs;
                         dispatch({ type: "UPDATE_RECTS", rects });
                     }}
-                    stageWidth={state.originalImageSize.width}
-                    stageHeight={state.originalImageSize.height}
+                    stageWidth={stageSize.width}//{state.originalImageSize.width}
+                    stageHeight={stageSize.height}//{state.originalImageSize.height}
                 />
             </Layer>
         </Stage>
