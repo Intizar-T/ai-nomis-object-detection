@@ -1,14 +1,11 @@
 import { Image } from 'react-konva';
-// import { useState } from "react";
 
 const RenderImage = ({ URL, dispatch, state }) => {
-    // const [imageSize, setImageSize] = useState({width: 200, height: 200});
-    
     const image = new window.Image();
-    //image.crossOrigin = 'Anonymous';
     image.src = URL;
     
     let imageWidth = 200, imageHeight = 200;
+    
     const handleLoad = () => {
         imageWidth = image.width;
         imageHeight = image.height;
@@ -24,7 +21,6 @@ const RenderImage = ({ URL, dispatch, state }) => {
                  imageWidth = imageHeight * ratio;
             }
         }
-        // setImageSize({width: imageWidth, height: imageHeight});
         // dispatch({ type:'SET_ORIGINAL_IMAGE_SIZE', size:{
         //         width: imageWidth,
         //         height: imageHeight,
@@ -37,7 +33,6 @@ const RenderImage = ({ URL, dispatch, state }) => {
             image={image}
             width={imageWidth}
             height={imageHeight}
-            //crossOrigin='anonymous'
         />
     );
 };
