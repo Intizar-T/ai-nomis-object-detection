@@ -48,7 +48,7 @@ function App() {
         e.evt.preventDefault();
         StageZoom(e, stage, 0);
       }); */
-      
+      // console.log("stage size = " + stage.width() + ", " + stage.height());
       dispatch({ type:'SET_STAGE_SIZE', size:{
           width: stage.width(),
           height: stage.height(),
