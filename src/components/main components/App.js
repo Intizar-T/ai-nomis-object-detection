@@ -108,15 +108,18 @@ function App() {
   const onSocketMessage = useCallback(async (data) => {
     const url = await JSON.parse(data["data"]);
     // console.log(url['imageURLs'])
-    // axios.get(url['imageURLs'])
-    //   .then(res => {
-    //       console.log(res);
-    //   })
-    //   .catch(err => {
-    //     console.log(err); 
-    //   });
+    axios.get(url['imageURLs'], {
+            responseType: 'blob'
+        })
+      .then(res => {
+          console.log(res.data);
+          ProcessImages(state, dispatch, res, socket, true);
+          socket.current?.close();
+      })
+      .catch(err => {
+        console.log(err); 
+      });
     // setBucketUrl(url);
-    ProcessImages(state, dispatch, url["imageURLs"], socket, true);
     // console.log("connection status now: "+ socket.current?.readyState)
     // console.log("trying to close the connection...");
     // socket.current?.close();
