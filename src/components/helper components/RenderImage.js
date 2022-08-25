@@ -1,15 +1,14 @@
 import { Image } from 'react-konva';
 
-
 const RenderImage = ({ URL, dispatch, state }) => {
     const image = new window.Image();
-    //image.crossOrigin = 'Anonymous';
     image.src = URL;
     
+    let imageWidth = 200, imageHeight = 200;
     
     const handleLoad = () => {
-        let imageWidth = image.width;
-        let imageHeight = image.height;
+        imageWidth = image.width;
+        imageHeight = image.height;
         const maxSize = 250;
         
         if(image.width > maxSize || image.height > maxSize) {
@@ -32,9 +31,8 @@ const RenderImage = ({ URL, dispatch, state }) => {
     return (
         <Image
             image={image}
-            // width={Math.min(image.width, imageWidth)}
-            // height={Math.min(image.height, imageHeight)}
-            //crossOrigin='anonymous'
+            width={imageWidth}
+            height={imageHeight}
         />
     );
 };

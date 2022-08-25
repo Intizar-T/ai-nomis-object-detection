@@ -48,7 +48,7 @@ function App() {
         e.evt.preventDefault();
         StageZoom(e, stage, 0);
       }); */
-      
+      // console.log("stage size = " + stage.width() + ", " + stage.height());
       dispatch({ type:'SET_STAGE_SIZE', size:{
           width: stage.width(),
           height: stage.height(),
@@ -105,10 +105,21 @@ function App() {
     console.log("Disconnected from the Websocket");
   }, []);
   
-  const onSocketMessage = useCallback((data) => {
-    const url = JSON.parse(data["data"]);
+  const onSocketMessage = useCallback(async (data) => {
+    const url = await JSON.parse(data["data"]);
+    // console.log(url['imageURLs'])
+    axios.get(url['imageURLs'], {
+            responseType: 'blob'
+        })
+      .then(res => {
+          console.log(res.data);
+          ProcessImages(state, dispatch, res, socket, true);
+          socket.current?.close();
+      })
+      .catch(err => {
+        console.log(err); 
+      });
     // setBucketUrl(url);
-    ProcessImages(state, dispatch, url["imageURLs"], socket, true);
     // console.log("connection status now: "+ socket.current?.readyState)
     // console.log("trying to close the connection...");
     // socket.current?.close();
@@ -156,12 +167,13 @@ function App() {
       className="w-screen h-screen"
       onMouseDown={(e) => checkDeselect(e)}  
     >
-      <CardHeader 
+      {/*<CardHeader 
         className="mainHeader" 
         floated={false}
       >
         <Header />
       </CardHeader>
+      */}
       
       <CardBody 
         className="mainBody"

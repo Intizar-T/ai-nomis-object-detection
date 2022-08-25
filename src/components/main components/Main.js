@@ -25,7 +25,7 @@ const Main = (props) => {
     return(
         <Stage
             width={stageSize.width} //{state.originalImageSize.width}
-            height={stageSize.height} //{state.originalImageSize.height}
+            height={stageSize.height} // {state.originalImageSize.height}
             onMouseDown={(e) => props.checkDeselect(e)}
             onTouchStart={(e) => props.checkDeselect(e)}
             ref={props.stageRef}
@@ -48,8 +48,8 @@ const Main = (props) => {
                         rects[state.rectangles[state.currentFileIndex].id] = newAttrs;
                         dispatch({ type: "UPDATE_RECTS", rects });
                     }}
-                    stageWidth={stageSize.width}//{state.originalImageSize.width}
-                    stageHeight={stageSize.height}//{state.originalImageSize.height}
+                    stageWidth={stageSize.width}
+                    stageHeight={stageSize.height}
                 />
             </Layer>
         </Stage>
