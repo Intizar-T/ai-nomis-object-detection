@@ -57,7 +57,7 @@ function unzip(files, dispatch) {
 
 const ProcessImages = async (state, dispatch, e, socket, imagesScraped) => {
     if(imagesScraped){
-        console.log(e);
+        // console.log(e);
         const blob = new Blob([e.data], {type: 'application/zip'});
         unzip(blob, dispatch);
     }

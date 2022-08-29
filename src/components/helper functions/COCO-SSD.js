@@ -41,24 +41,6 @@ const Images = async (files) => {
         return new Promise((resolve, reject) => {
             img.onload = function() {
                 try {
-                    // let imageWidth = img.width;
-                    // let imageHeight = img.height;
-                    // const maxSize = 250;
-                    
-                    // if(img.width > maxSize || img.height > maxSize) {
-                    //     const ratio = Math.floor(img.width / img.height);
-                    //     if(img.width > maxSize) {
-                    //          imageWidth = maxSize;
-                    //          imageHeight = imageWidth / ratio;
-                    //     } else {
-                    //          imageHeight = maxSize;
-                    //          imageWidth = imageHeight * ratio;
-                    //     }
-                    // }
-                    // img.width = imageWidth;
-                    // img.height = imageHeight;
-                    
-                    // console.log(img.width + ", " + img.height);
                     img.width = 200;
                     img.height = 200;
                     resolve(img);

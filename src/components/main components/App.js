@@ -2,7 +2,6 @@ import { useEffect, useContext, useState, useCallback, useRef } from "react";
 import axios from "axios";
 import { Context } from "../context/context";
 import DownloadImage from "../download/DownloadImage";
-import Header from "./Header";
 import Main from "./Main";
 import InternalFooter from "./InternalFooter";
 import OuterFooter from "./OuterFooter";
@@ -30,7 +29,6 @@ function App() {
   const socket = useRef(null);
   
   const [isConnected, setIsConnected] = useState(false);
-  // const [bucketUrl, setBucketUrl] = useState("");
   	
 	useEffect(() => {
 	  COCO_SSD(state, dispatch);
@@ -41,14 +39,7 @@ function App() {
   useEffect(() => {
     if(stageRef.current !== null){
       const stage = stageRef.current;
-      //console.log(stage.width());
       dispatch({ type: "SET_STAGE", stage: stage });
-
-      /* stage.on('wheel', (e) => {
-        e.evt.preventDefault();
-        StageZoom(e, stage, 0);
-      }); */
-      // console.log("stage size = " + stage.width() + ", " + stage.height());
       dispatch({ type:'SET_STAGE_SIZE', size:{
           width: stage.width(),
           height: stage.height(),
@@ -107,7 +98,6 @@ function App() {
   
   const onSocketMessage = useCallback(async (data) => {
     const url = await JSON.parse(data["data"]);
-    // console.log(url['imageURLs'])
     axios.get(url['imageURLs'], {
             responseType: 'blob'
         })
@@ -119,11 +109,6 @@ function App() {
       .catch(err => {
         console.log(err); 
       });
-    // setBucketUrl(url);
-    // console.log("connection status now: "+ socket.current?.readyState)
-    // console.log("trying to close the connection...");
-    // socket.current?.close();
-    // console.log("Connection closed: " + socket.current?.readyState);
   }, []);
 
   const onConnect = useCallback(() => {
@@ -147,34 +132,12 @@ function App() {
       }));
     }
   }, [isConnected]);
-  
-  // useEffect(() => {
-  //   // const url = bucketUrl;
-  //   if(bucketUrl !== ""){
-  //     console.log(bucketUrl)
-  //     axios.get(bucketUrl)
-  //       .then((response) => {
-  //         console.log("received smth");
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //     }
-  // }, [bucketUrl]);
 
   return (
     <Card 
       className="w-screen h-screen"
       onMouseDown={(e) => checkDeselect(e)}  
     >
-      {/*<CardHeader 
-        className="mainHeader" 
-        floated={false}
-      >
-        <Header />
-      </CardHeader>
-      */}
-      
       <CardBody 
         className="mainBody"
       >
