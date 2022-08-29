@@ -24,7 +24,6 @@ export default function ClassModal(props) {
 					value={keyword}
 					onChange={(e) => {
 						setKeyword(e.target.value);
-						//console.log();
 					}}
 				/>
 			</DialogBody>

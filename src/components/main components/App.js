@@ -17,7 +17,8 @@ import {
   CardBody,
   CardFooter,
   Typography,
-} from '@material-tailwind/react'
+}
+from '@material-tailwind/react'
 
 import COCO_SSD from "../helper functions/COCO-SSD"
 
@@ -27,23 +28,32 @@ function App() {
   const { state, dispatch } = useContext(Context);
   const stageRef = useRef(null);
   const socket = useRef(null);
-  
+
   const [isConnected, setIsConnected] = useState(false);
-  	
-	useEffect(() => {
-	  COCO_SSD(state, dispatch);
-	}, [state.files]);
+  
+  // for image scraping countdown
+  const baseTime = 30; // in ms
+  const timePerImage = 5; // in ms
+  let count = 0, totalWaitingTime = 0, whileTimer = 0;
+  let url = "";
+  let connectionId = "";
+
+  useEffect(() => {
+    COCO_SSD(state, dispatch);
+  }, [state.files]);
 
   /* attach a zoom in/out callback to the stage
    every time a stage changes */
   useEffect(() => {
-    if(stageRef.current !== null){
+    if (stageRef.current !== null) {
       const stage = stageRef.current;
       dispatch({ type: "SET_STAGE", stage: stage });
-      dispatch({ type:'SET_STAGE_SIZE', size:{
+      dispatch({
+        type: 'SET_STAGE_SIZE',
+        size: {
           width: stage.width(),
           height: stage.height(),
-        } 
+        }
       });
     }
   }, [stageRef.current]);
@@ -52,12 +62,15 @@ function App() {
   /* Change the window size in the state every time
   the window resizes (for responsiveness) -> needs to be
   reimplemented in a better way! */
-  useEffect(() => { 
+  useEffect(() => {
     function handleResize() {
-      dispatch({ type:"SET_SCREEN_SIZE", size:{
+      dispatch({
+        type: "SET_SCREEN_SIZE",
+        size: {
           width: window.innerWidth,
           height: window.innerHeight,
-        }})
+        }
+      })
     }
     window.addEventListener('resize', handleResize);
     return () => {
@@ -69,69 +82,112 @@ function App() {
     const uri = stageRef.current.toDataURL();
     DownloadImage(state, uri);
   };
-  
+
   const checkDeselect = (e) => {
     try {
       const stage = e.target.getStage();
       const rects = stage.find('Rect');
-		  const isRect = (rects.includes(e.target));
-        
+      const isRect = (rects.includes(e.target));
+
       if (!isRect) {
-        dispatch({ type:"SET_SELECTED_RECT_ID", id: null })
+        dispatch({ type: "SET_SELECTED_RECT_ID", id: null })
       }
-    } catch(error) {
-      if(!(e.target.nodeName === "CANVAS")) {
-        dispatch({ type:"SET_SELECTED_RECT_ID", id: null })
+    }
+    catch (error) {
+      if (!(e.target.nodeName === "CANVAS")) {
+        dispatch({ type: "SET_SELECTED_RECT_ID", id: null })
       }
     }
   }
-  
+
   const onSocketOpen = useCallback(() => {
     setIsConnected(true);
     console.log("Connected to the WebSocket");
   }, []);
-  
+
   const onSocketClose = useCallback(() => {
     setIsConnected(false);
     console.log("Disconnected from the Websocket");
   }, []);
-  
+
   const onSocketMessage = useCallback(async (data) => {
     const body = await JSON.parse(data["data"]);
-    console.log(body["connectionId"]);
-    socket.close();
-    // axios.get(url['imageURLs'], {
-    //         responseType: 'blob'
-    //     })
-    //   .then(res => {
-    //       console.log(res.data);
-    //       ProcessImages(state, dispatch, res, socket, true);
-    //       socket.current?.close();
-    //   })
-    //   .catch(err => {
-    //     console.log(err); 
-    //   });
+    console.log("body:");
+    console.log(body);
+    
+    if(body["connectionId"] && !body["message"]){
+      console.log("connectionId:");
+      console.log(body["connectionId"]);
+      connectionId = body["connectionId"];
+      count = state.imageCount;
+      totalWaitingTime = (baseTime + timePerImage * count) * 1000;
+      await new Promise((resolve) =>
+        setTimeout(resolve, totalWaitingTime)
+      );
+      console.log("timed out!");
+      sendSocketMessage({
+        "action": "getImages",
+        "message": {
+          "method": "GET",
+          "connectionId": connectionId
+        }
+      });
+      
+    }
+
+    else {
+      try{
+        url = body["url"]["Item"]["url"]["S"];
+      } catch (error) {
+        url = "";  
+      }
+      
+      // console.log("url:");  
+      // console.log(url);
+      
+      if(!url) {
+        sendSocketMessage({
+          "action": "getImages",
+          "message": {
+            "method": "GET",
+            "connectionId": connectionId
+          }
+        });
+        
+      } else {
+        socket.current?.close();
+        const response = await axios.get(url, {
+          responseType: 'blob'
+        });
+        ProcessImages(state, dispatch, response, socket, true);
+      }
+    }
   }, []);
+  
+  const sendSocketMessage = (data) => {
+    socket.current?.send(JSON.stringify(data));
+  }
 
   const onConnect = useCallback(() => {
-    if(socket.current?.readyState !== WebSocket.OPEN) {
+    if (socket.current?.readyState !== WebSocket.OPEN) {
       socket.current = new WebSocket(URL);
       socket.current.addEventListener('open', onSocketOpen)
       socket.current.addEventListener('close', onSocketClose);
       socket.current.addEventListener('message', onSocketMessage);
     }
   }, []);
-  
+
   useEffect(() => {
-    if(isConnected) {
+    if (isConnected) {
       console.log("Sending a request now...")
-      socket.current?.send(JSON.stringify({
+      sendSocketMessage({
         "action": "getImages",
         "message": {
           "keyword": state.imageKeyword,
-          "count": state.imageCount
-        }
-      }));
+          "count": state.imageCount,
+          "method": "POST"
+        }  
+      });
     }
   }, [isConnected]);
 
