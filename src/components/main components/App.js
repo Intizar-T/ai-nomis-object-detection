@@ -112,56 +112,60 @@ function App() {
 
   const onSocketMessage = useCallback(async (data) => {
     const body = await JSON.parse(data["data"]);
-    console.log("body:");
-    console.log(body);
+    const url = body["url"];
     
-    if(body["connectionId"] && !body["message"]){
-      console.log("connectionId:");
-      console.log(body["connectionId"]);
-      connectionId = body["connectionId"];
-      count = state.imageCount;
-      totalWaitingTime = (baseTime + timePerImage * count) * 1000;
-      await new Promise((resolve) =>
-        setTimeout(resolve, totalWaitingTime)
-      );
-      console.log("timed out!");
-      sendSocketMessage({
-        "action": "getImages",
-        "message": {
-          "method": "GET",
-          "connectionId": connectionId
-        }
-      });
-      
-    }
-
-    else {
-      try{
-        url = body["url"]["Item"]["url"]["S"];
-      } catch (error) {
-        url = "";  
-      }
-      
-      // console.log("url:");  
-      // console.log(url);
-      
-      if(!url) {
-        sendSocketMessage({
-          "action": "getImages",
-          "message": {
-            "method": "GET",
-            "connectionId": connectionId
-          }
-        });
-        
-      } else {
-        socket.current?.close();
+    if(url){
+      try {
         const response = await axios.get(url, {
           responseType: 'blob'
         });
         ProcessImages(state, dispatch, response, socket, true);
+        socket.current?.close();
+      } catch(error) {
+        console.log(error);
+        socket.current?.close();
       }
     }
+    // console.log(body["url"]);
+    // if(body["connectionId"] && !body["message"]){
+    //   connectionId = body["connectionId"];
+    //   count = state.imageCount;
+    //   totalWaitingTime = (baseTime + timePerImage * count) * 1000;
+    //   await new Promise((resolve) =>
+    //     setTimeout(resolve, totalWaitingTime)
+    //   );
+    //   sendSocketMessage({
+    //     "action": "getImages",
+    //     "message": {
+    //       "method": "GET",
+    //       "connectionId": connectionId
+    //     }
+    //   });
+      
+    // }
+
+    // else {
+    //   try{
+    //     url = body["url"]["Item"]["url"]["S"];
+    //   } catch (error) {
+    //     url = "";  
+    //   }
+    //   if(!url) {
+    //     sendSocketMessage({
+    //       "action": "getImages",
+    //       "message": {
+    //         "method": "GET",
+    //         "connectionId": connectionId
+    //       }
+    //     });
+    //   } else {
+    //     socket.current?.close();
+    //     const response = await axios.get(url, {
+    //       responseType: 'blob'
+    //     });
+    //     ProcessImages(state, dispatch, response, socket, true);
+    //   }
+    // }
   }, []);
   
   const sendSocketMessage = (data) => {
