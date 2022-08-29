@@ -97,18 +97,20 @@ function App() {
   }, []);
   
   const onSocketMessage = useCallback(async (data) => {
-    const url = await JSON.parse(data["data"]);
-    axios.get(url['imageURLs'], {
-            responseType: 'blob'
-        })
-      .then(res => {
-          console.log(res.data);
-          ProcessImages(state, dispatch, res, socket, true);
-          socket.current?.close();
-      })
-      .catch(err => {
-        console.log(err); 
-      });
+    const body = await JSON.parse(data["data"]);
+    console.log(body["connectionId"]);
+    socket.close();
+    // axios.get(url['imageURLs'], {
+    //         responseType: 'blob'
+    //     })
+    //   .then(res => {
+    //       console.log(res.data);
+    //       ProcessImages(state, dispatch, res, socket, true);
+    //       socket.current?.close();
+    //   })
+    //   .catch(err => {
+    //     console.log(err); 
+    //   });
   }, []);
 
   const onConnect = useCallback(() => {
