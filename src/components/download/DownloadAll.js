@@ -10,24 +10,31 @@ const DownloadAll = async (state, dispatch, forDetection) => {
 
 
     const promises = state.files.map((file, index) => {
+        const imgWidth = file[2].width;
+        const imgHeight = file[2].height;
+        
         const canvas = document.createElement('canvas');
+        canvas.width = imgWidth;
+        canvas.height = imgHeight;
         const context = canvas.getContext('2d');
+        
         const img = new window.Image();
         img.src = file[1];
+        img.width = imgWidth;
+        img.height = imgHeight
 
         return new Promise((resolve, reject) => {
             img.onload = function() {
                 try {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
                     context.drawImage(img, 0, 0);
+                    console.log("canvas size = " + canvas.width + ", " + canvas.height);
+                    console.log("image size = " + img.width + ", " + img.height);
+                    // if(!forDetection){
+                    //     const currRect = state.rectangles[index];
+                    //     context.lineWidth = currRect.strokeWidth;
+                    //     context.strokeRect(currRect.x, currRect.y, currRect.width, currRect.height);
 
-                    if(!forDetection){
-                        const currRect = state.rectangles[index];
-                        context.lineWidth = currRect.strokeWidth;
-                        context.strokeRect(currRect.x, currRect.y, currRect.width, currRect.height);
-
-                    }
+                    // }
                     resolve([file[0], canvas.toDataURL()]);
                 } catch(err){
                     reject(err);

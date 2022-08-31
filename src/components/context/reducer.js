@@ -11,13 +11,13 @@ const Reducer = (state, action) => {
 				labelPrompt: action.label,
 			};
 		case "INIT_LABELS":
+			const newLabels = state.labels.concat(action.labels);
 			return {
 				...state,
-				labels: [...Array(action.length).keys()],
+				labels: newLabels,
 			};
 		case "INIT_RECTS":
 			const rects = [];
-			const hist = [];
 			for(let i = 0; i < action.length; i++) {
 				rects.push({
 					x: 10,
@@ -27,15 +27,8 @@ const Reducer = (state, action) => {
 					id: i.toString(),
 					label: "not labeled",
 					stroke: 'black',
-					strokeWidth: 4,
-					hist: [
-						{
-							x: 10,
-							y: 10, 
-							width: 100,
-							height: 100,
-						}
-					]
+					strokeWidth: 3,
+					hist: []
 				})
 			}
 			return {

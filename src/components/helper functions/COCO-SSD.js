@@ -6,6 +6,7 @@ const COCO_SSD = async (state, dispatch) => {
         const net  = await cocossd.load();
         const images = await Images(state.files);
         const rects = state.rectangles;
+        let labels = [];
         
         await images.forEach(async (image, i) => {
             try {
@@ -20,20 +21,32 @@ const COCO_SSD = async (state, dispatch) => {
                 const safeWidth = image.width - 5;
                 const safeHeight = image.height - 5;
                 const label = prediction[0]['class'];
+                labels.push(label);
                 rect.x = x <= 2.5 ? 2.5 : x;
                 rect.y = y <= 2.5 ? 2.5 : y;
                 rect.width = width <= safeWidth ? width : safeWidth;
                 rect.height = height <= safeHeight ? height : safeHeight;
+                
+                const new_hist = {
+                    x: rect.x,
+                    y: rect.y,
+                    width: rect.width,
+                    height: rect.height,
+                }
+                rect.hist.push(new_hist);
+
                 rect.label = label;
                 
                 rects[i] = rect;
                 
+                // console.log(rects);
+                
                 dispatch({ type: "UPDATE_RECTS",  rects: rects});
             } catch (err) {
-                console.log("Error occured at COCO SSD: " + err);
+                console.log(err);
             }
         });
-        
+        dispatch({ type: "INIT_LABELS", labels: labels });
         dispatch({ type:"UPDATE_IMAGES_READY", ready:true });
         
         // console.log("-------------------------");

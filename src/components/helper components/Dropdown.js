@@ -16,11 +16,11 @@ export default function Dropdown({ labels, rects, currentFileIndex }) {
                     <Button variant="gradient">Select Label</Button>
                 </MenuHandler>
                 <MenuList>
-                    {labels.map((val, i) => {
+                   {labels.map((val, i) => {
                         return (
                             <MenuItem 
                                 key={i} 
-                                value={val.toString()}
+                                value={val}
                                 onClick={() => {
                                     rects[currentFileIndex].label = val;
                                     dispatch({ type: "SET_BOX_LABEL", rects: rects }); 

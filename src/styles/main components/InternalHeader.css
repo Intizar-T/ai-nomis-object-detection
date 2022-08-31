@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .canvasHeader {
+        @apply
+            h-16 
+            flex 
+            items-center 
+            justify-between 
+            border-2 
+            border-blue-400;
+    }
+}

@@ -6,10 +6,10 @@ import Main from "./Main";
 import InternalFooter from "./InternalFooter";
 import OuterFooter from "./OuterFooter";
 import ClassModal from "../helper components/ClassModal";
-import Dropdown from "../helper components/Dropdown";
 import LandingPage from "./LandingPage";
 import ProcessImages from "../helper functions/ProcessImages";
-import ResizeImages from "../helper functions/ResizeImages"
+import ResizeImages from "../helper functions/ResizeImages";
+import InternalHeader from "./InternalHeader";
 import './../../styles/main components/App.css';
 
 import {
@@ -172,16 +172,11 @@ function App() {
           <Card className="canvas">
             {state.files.length > 0 ? (
               <CardHeader
-                className='canvasHeader'
+                
               >
-                <Typography variant='h6' className='ml-2'>
-                  Label: {state.rectangles[state.currentFileIndex].label}
-                </Typography>
-                <Dropdown 
-                  labels={state.labels} 
-                  dispatch={dispatch}
-                  rects={state.rectangles} 
-                  currentFileIndex={state.currentFileIndex}
+                <InternalHeader
+                  state={state}
+                  dispatch = {dispatch}
                 />
               </CardHeader>
             ) : (

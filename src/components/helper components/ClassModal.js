@@ -45,8 +45,8 @@ export default function ClassModal(props) {
 			<DialogFooter>
 				<Button
 					onClick={() => {
-						if (value > 0 && value < 143 && keyword !== "") {
-							props.dispatch({ type: "INIT_LABELS", length: value });
+						if (value > 0 && value <= 100 && keyword !== "") {
+							props.dispatch({ type: "INIT_LABELS", labels: [keyword] });
 							props.dispatch({ type: "SET_LABELPROMPT", label: false });
 							props.dispatch({ type: "SET_KEYWORD", keyword: keyword });
 							props.dispatch({ type: "SET_COUNT", count: value });
