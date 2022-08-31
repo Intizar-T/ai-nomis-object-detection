@@ -40,7 +40,7 @@ function unzip(files, dispatch) {
                     if (name.slice(0, 2) === "._") {
                         name = name.slice(2);
                     }
-                    return [name, URL.createObjectURL(blob)];
+                    return [name, URL.createObjectURL(blob), {width: 0, height: 0}];
                 });
             });
 

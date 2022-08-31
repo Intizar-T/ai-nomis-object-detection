@@ -1,6 +1,6 @@
 const DEFAULT_STATE = {
 	files: [],
-	originalImageSize: { width: 0, height: 0 },
+	imageSize: { width: 0, height: 0 },
 	currentFileIndex: 0,
 	labels: [],
 	labelPrompt: false,
@@ -11,7 +11,8 @@ const DEFAULT_STATE = {
 	stageSize: {width: 0, height: 0},
 	stage: null,
 	imageKeyword: "",
-	imageCount: 0
+	imageCount: 0,
+	imagesReady: false,
 };
 
 export default DEFAULT_STATE;

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Stage, Layer } from 'react-konva';
 import Rectangle from "../helper components/Rectangle"
 import RenderImage from "../helper components/RenderImage";
@@ -6,7 +6,6 @@ import { Context } from "../context/context";
 
 const Main = (props) => {
     const { state, dispatch } = useContext(Context);
-    const [stageSize, setStageSize] = useState({width: 200, height: 200});
 
     const updateHistory = () => {
         const curr_index = state.currentFileIndex;
@@ -21,11 +20,17 @@ const Main = (props) => {
 
         dispatch({ type: "UPDATE_RECTS", rects: rects });
     }
+    
+    const curIndex = state.currentFileIndex;
+    const curFile = state.files[curIndex]
+    const curImageWidth = curFile[2].width;
+    const curImageHeight = curFile[2].height;
+    const URL = curFile[1];
 
     return(
         <Stage
-            width={stageSize.width} //{state.originalImageSize.width}
-            height={stageSize.height} // {state.originalImageSize.height}
+            width= {curImageWidth}//{stageSize.width} //{state.originalImageSize.width}
+            height= {curImageHeight}//{stageSize.height} // {state.originalImageSize.height}
             onMouseDown={(e) => props.checkDeselect(e)}
             onTouchStart={(e) => props.checkDeselect(e)}
             ref={props.stageRef}
@@ -34,7 +39,10 @@ const Main = (props) => {
             }}
         >
             <Layer>
-                <RenderImage URL={state.files[state.currentFileIndex][1]} dispatch={dispatch} state={state}/>
+                <RenderImage 
+                    URL={URL} 
+                    imageSize={curFile[2]}//{imageSize}
+                />
                 <Rectangle
                     key={state.rectangles[state.currentFileIndex].id}
                     shapeProps={state.rectangles[state.currentFileIndex]}
@@ -48,8 +56,8 @@ const Main = (props) => {
                         rects[state.rectangles[state.currentFileIndex].id] = newAttrs;
                         dispatch({ type: "UPDATE_RECTS", rects });
                     }}
-                    stageWidth={stageSize.width}
-                    stageHeight={stageSize.height}
+                    stageWidth={curImageWidth}//{stageSize.width}
+                    stageHeight={curImageHeight}//{stageSize.height}
                 />
             </Layer>
         </Stage>

@@ -1,6 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
 import * as cocossd from "@tensorflow-models/coco-ssd";
-import Resizer from "react-image-file-resizer";
 
 const COCO_SSD = async (state, dispatch) => {
     if(state.files.length > 0){
@@ -8,7 +7,7 @@ const COCO_SSD = async (state, dispatch) => {
         const images = await Images(state.files);
         const rects = state.rectangles;
         
-        images.forEach(async (image, i) => {
+        await images.forEach(async (image, i) => {
             try {
                 
                 let rect = rects[i];
@@ -31,6 +30,10 @@ const COCO_SSD = async (state, dispatch) => {
                 console.log("Error occured at COCO SSD: " + err);
             }
         });
+        
+        dispatch({ type:"UPDATE_IMAGES_READY", ready:true });
+        
+        // console.log("-------------------------");
     }
 }
 
@@ -41,8 +44,10 @@ const Images = async (files) => {
         return new Promise((resolve, reject) => {
             img.onload = function() {
                 try {
-                    img.width = 200;
-                    img.height = 200;
+                    // console.log("from COCO-SSD, imageSize:");
+                    // console.log(file[2]);
+                    img.width = file[2].width;
+                    img.height = file[2].height;
                     resolve(img);
                 } catch(err){
                     reject(err);

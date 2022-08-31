@@ -9,6 +9,7 @@ import ClassModal from "../helper components/ClassModal";
 import Dropdown from "../helper components/Dropdown";
 import LandingPage from "./LandingPage";
 import ProcessImages from "../helper functions/ProcessImages";
+import ResizeImages from "../helper functions/ResizeImages"
 import './../../styles/main components/App.css';
 
 import {
@@ -31,14 +32,16 @@ function App() {
 
   const [isConnected, setIsConnected] = useState(false);
   
-  // for image scraping countdown
-  const baseTime = 30; // in ms
-  const timePerImage = 5; // in ms
-  let count = 0, totalWaitingTime = 0, whileTimer = 0;
-  let url = "";
-  let connectionId = "";
-
   useEffect(() => {
+    async function callResizeImages() {
+      const newFiles = await ResizeImages(state, dispatch);
+      dispatch({ type: "SET_FILES", files: newFiles});
+      // console.log("before entering COCOSSD:");
+      // console.log(state.files);
+      // console.log("--------------------");
+    }
+    callResizeImages();
+    // ResizeImages(state, dispatch);
     COCO_SSD(state, dispatch);
   }, [state.files]);
 
@@ -117,7 +120,7 @@ function App() {
     if(url){
       try {
         const response = await axios.get(url, {
-          responseType: 'blob'
+          responseType: 'arraybuffer'
         });
         ProcessImages(state, dispatch, response, socket, true);
         socket.current?.close();
@@ -126,46 +129,6 @@ function App() {
         socket.current?.close();
       }
     }
-    // console.log(body["url"]);
-    // if(body["connectionId"] && !body["message"]){
-    //   connectionId = body["connectionId"];
-    //   count = state.imageCount;
-    //   totalWaitingTime = (baseTime + timePerImage * count) * 1000;
-    //   await new Promise((resolve) =>
-    //     setTimeout(resolve, totalWaitingTime)
-    //   );
-    //   sendSocketMessage({
-    //     "action": "getImages",
-    //     "message": {
-    //       "method": "GET",
-    //       "connectionId": connectionId
-    //     }
-    //   });
-      
-    // }
-
-    // else {
-    //   try{
-    //     url = body["url"]["Item"]["url"]["S"];
-    //   } catch (error) {
-    //     url = "";  
-    //   }
-    //   if(!url) {
-    //     sendSocketMessage({
-    //       "action": "getImages",
-    //       "message": {
-    //         "method": "GET",
-    //         "connectionId": connectionId
-    //       }
-    //     });
-    //   } else {
-    //     socket.current?.close();
-    //     const response = await axios.get(url, {
-    //       responseType: 'blob'
-    //     });
-    //     ProcessImages(state, dispatch, response, socket, true);
-    //   }
-    // }
   }, []);
   
   const sendSocketMessage = (data) => {
@@ -189,7 +152,6 @@ function App() {
         "message": {
           "keyword": state.imageKeyword,
           "count": state.imageCount,
-          "method": "POST"
         }  
       });
     }
@@ -230,7 +192,7 @@ function App() {
             <CardBody
               className='canvasBody'
             >
-              {state.files.length > 0 ? (
+              {state.files.length > 0 && state.imagesReady ? (
               <Main checkDeselect={checkDeselect} stageRef={stageRef}/>
               ) : (
                 <LandingPage />

@@ -62,7 +62,7 @@ const Reducer = (state, action) => {
 				...state,
 				currentFileIndex: action.index,
 			};
-		case "SET_ORIGINAL_IMAGE_SIZE":
+		case "SET_IMAGE_SIZE":
 			return {
 				...state,
 				originalImageSize: action.size,
@@ -117,6 +117,16 @@ const Reducer = (state, action) => {
 			return {
 				...state,
 				imageURLs: action.URLs,
+			}
+		// case "UPDATE_FILES":
+		// 	return {
+		// 		...state,
+		// 		files: action.newFiles
+		// 	}
+		case "UPDATE_IMAGES_READY":
+			return {
+				...state,
+				imagesReady: action.ready
 			}
 		default:
 			return state;
