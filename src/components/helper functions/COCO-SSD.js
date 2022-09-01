@@ -16,15 +16,12 @@ const COCO_SSD = async (state, dispatch) => {
         if (prediction.length === 0) return;
 
         const [x, y, width, height] = prediction[0]["bbox"];
-        // console.log(image.width + ", " + image.height);
-        // const safeWidth = image.width - 5;
-        // const safeHeight = image.height - 5;
         const label = prediction[0]["class"];
-        labels.push(label);
-        rect.x = x; // <= 2.5 ? 2.5 : x;
-        rect.y = y; // <= 2.5 ? 2.5 : y;
-        rect.width = width; // <= safeWidth ? width : safeWidth;
-        rect.height = height; // <= safeHeight ? height : safeHeight;
+        if (!labels.includes(label)) labels.push(label);
+        rect.x = x;
+        rect.y = y;
+        rect.width = width;
+        rect.height = height;
 
         const new_hist = {
           x: rect.x,
@@ -37,8 +34,6 @@ const COCO_SSD = async (state, dispatch) => {
         rect.label = label;
 
         rects[i] = rect;
-
-        // console.log(rects);
 
         dispatch({ type: "UPDATE_RECTS", rects: rects });
       } catch (err) {

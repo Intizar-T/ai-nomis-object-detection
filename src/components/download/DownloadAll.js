@@ -31,18 +31,23 @@ const DownloadAll = async (state, dispatch, forDetection) => {
           context.drawImage(img, 0, 0);
           //   console.log("canvas size = " + canvas.width + ", " + canvas.height);
           //   console.log("image size = " + img.width + ", " + img.height);
-          if (!forDetection) {
-            const rect = state.rectangles[index];
-            const hist = rect.hist;
-            const i = hist.length - 1;
-            // console.log(hist);
-            context.lineWidth = rect.strokeWidth;
-            context.strokeRect(
-              hist[i].x * widthRatio,
-              hist[i].y * heightRatio,
-              hist[i].width * widthRatio,
-              hist[i].height * heightRatio
-            );
+          try {
+            if (!forDetection) {
+              const rect = state.rectangles[index];
+              const hist = rect.hist;
+              const i = hist.length - 1;
+              // console.log(hist);
+              context.lineWidth =
+                rect.strokeWidth * Math.max(widthRatio, heightRatio);
+              context.strokeRect(
+                hist[i].x * widthRatio,
+                hist[i].y * heightRatio,
+                hist[i].width * widthRatio,
+                hist[i].height * heightRatio
+              );
+            }
+          } catch (err) {
+            console.log(err);
           }
           resolve([file[0], canvas.toDataURL()]);
         } catch (err) {

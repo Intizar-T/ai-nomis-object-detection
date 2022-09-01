@@ -18,8 +18,6 @@ const DownloadImage = async (state) => {
       try {
         const widthRatio = img.width / imgWidth;
         const heightRatio = img.height / imgHeight;
-        console.log("DownloadImage widthRatio = " + widthRatio);
-        console.log("DownloadImage heightRatio = " + heightRatio);
         canvas.height = img.height;
         canvas.width = img.width;
 
