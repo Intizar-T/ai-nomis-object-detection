@@ -23,14 +23,17 @@ const Main = (props) => {
 
   const curIndex = state.currentFileIndex;
   const curFile = state.files[curIndex];
+  const curRects = state.rectangles[curIndex];
   const curImageWidth = curFile[2].width;
+  const stageWidth = curImageWidth + 1;
   const curImageHeight = curFile[2].height;
+  const stageHeight = curImageHeight + 1;
   const URL = curFile[1];
 
   return (
     <Stage
-      width={curImageWidth + 5}
-      height={curImageHeight + 5}
+      width={stageWidth}
+      height={stageHeight}
       onMouseDown={(e) => props.checkDeselect(e)}
       onTouchStart={(e) => props.checkDeselect(e)}
       ref={props.stageRef}
@@ -41,25 +44,23 @@ const Main = (props) => {
       <Layer>
         <RenderImage URL={URL} imageSize={curFile[2]} />
         <Rectangle
-          key={state.rectangles[state.currentFileIndex].id}
-          shapeProps={state.rectangles[state.currentFileIndex]}
-          isSelected={
-            state.rectangles[state.currentFileIndex].id === state.selectedRectId
-          }
+          key={curRects.id}
+          shapeProps={curRects}
+          isSelected={curRects.id === state.selectedRectId}
           onSelect={() => {
             dispatch({
               type: "SET_SELECTED_RECT_ID",
-              id: state.rectangles[state.currentFileIndex].id,
+              id: curRects.id,
             });
           }}
           onChange={(newAttrs) => {
             updateHistory();
             const rects = state.rectangles.slice();
-            rects[state.rectangles[state.currentFileIndex].id] = newAttrs;
+            rects[curRects.id] = newAttrs;
             dispatch({ type: "UPDATE_RECTS", rects });
           }}
-          stageWidth={curImageWidth}
-          stageHeight={curImageHeight}
+          stageWidth={stageWidth}
+          stageHeight={stageHeight}
         />
       </Layer>
     </Stage>
