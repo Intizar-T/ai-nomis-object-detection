@@ -35,7 +35,7 @@ const DownloadAll = async (state, dispatch, forDetection) => {
             const rect = state.rectangles[index];
             const hist = rect.hist;
             const i = hist.length - 1;
-            console.log(hist);
+            // console.log(hist);
             context.lineWidth = rect.strokeWidth;
             context.strokeRect(
               hist[i].x * widthRatio,
