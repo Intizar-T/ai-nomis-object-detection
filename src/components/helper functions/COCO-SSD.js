@@ -60,7 +60,7 @@ const Images = async (files) => {
           img.height = file[2].height;
           resolve(img);
         } catch (err) {
-          reject(err);
+          console.log(err);
         }
       };
     });
