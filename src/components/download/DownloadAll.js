@@ -12,8 +12,6 @@ const DownloadAll = async (state, dispatch, forDetection) => {
     const imgHeight = file[2].height;
 
     const canvas = document.createElement("canvas");
-    // canvas.width = imgWidth;
-    // canvas.height = imgHeight;
     const context = canvas.getContext("2d");
 
     const img = new window.Image();
