@@ -23,12 +23,12 @@ const DownloadImage = async (state) => {
 
         context.drawImage(img, 0, 0);
 
-        context.lineWidth = curRect.strokeWidth;
+        context.lineWidth = curRect.strokeWidth * Math.min(widthRatio, heightRatio);
         context.strokeRect(
-          curHist[curHistLen].x * widthRatio,
-          curHist[curHistLen].y * heightRatio,
-          curHist[curHistLen].width * widthRatio,
-          curHist[curHistLen].height * heightRatio
+          curRect.x * widthRatio,
+          curRect.y * heightRatio,
+          curRect.width * widthRatio,
+          curRect.height * heightRatio
         );
         resolve(canvas.toDataURL());
       } catch (err) {

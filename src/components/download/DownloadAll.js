@@ -38,12 +38,12 @@ const DownloadAll = async (state, dispatch, forDetection) => {
               const i = hist.length - 1;
               // console.log(hist);
               context.lineWidth =
-                rect.strokeWidth * Math.max(widthRatio, heightRatio);
+                rect.strokeWidth * Math.min(widthRatio, heightRatio);
               context.strokeRect(
-                hist[i].x * widthRatio,
-                hist[i].y * heightRatio,
-                hist[i].width * widthRatio,
-                hist[i].height * heightRatio
+                rect.x * widthRatio,
+                rect.y * heightRatio,
+                rect.width * widthRatio,
+                rect.height * heightRatio
               );
             }
           } catch (err) {
