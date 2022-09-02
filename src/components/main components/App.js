@@ -10,6 +10,8 @@ import LandingPage from "./LandingPage";
 import ProcessImages from "../helper functions/ProcessImages";
 import ResizeImages from "../helper functions/ResizeImages";
 import InternalHeader from "./InternalHeader";
+import ChooseModel from "../helper components/ChooseModel";
+import ModelDropdown from "../helper components/ModelDropdown";
 import "./../../styles/main components/App.css";
 
 import {
@@ -20,7 +22,8 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-import COCO_SSD from "../helper functions/COCO-SSD";
+import COCO_SSD from "../models/COCO-SSD";
+import Mobilenet from "../models/Mobilenet";
 
 const URL =
   "wss://onedv62i9e.execute-api.ap-northeast-2.amazonaws.com/production";
@@ -33,15 +36,16 @@ function App() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (state.files.length > 0) {
+    if (state.files.length > 0 && state.model !== "not selected") {
       async function callResizeImages() {
         const newFiles = await ResizeImages(state, dispatch);
         dispatch({ type: "SET_FILES", files: newFiles });
       }
       callResizeImages();
-      COCO_SSD(state, dispatch);
+      if (state.model === "coco-ssd") COCO_SSD(state, dispatch);
+      else Mobilenet(state, dispatch);
     }
-  }, [state.files]);
+  }, [state.files, state.model]);
 
   /* attach a zoom in/out callback to the stage
    every time a stage changes */
@@ -84,12 +88,12 @@ function App() {
   };
 
   const checkDeselect = (e) => {
-    if(state.selectedRectId){
+    if (state.selectedRectId) {
       try {
         const stage = e.target.getStage();
         const rects = stage.find("Rect");
         const isRect = rects.includes(e.target);
-  
+
         if (!isRect) {
           dispatch({ type: "SET_SELECTED_RECT_ID", id: null });
         }
@@ -161,7 +165,7 @@ function App() {
         {state.labelPrompt && (
           <ClassModal dispatch={dispatch} onConnect={onConnect} />
         )}
-
+        {/* {state.imagesProcessed && <ChooseModel />} */}
         <Card className="canvas">
           {state.files.length > 0 ? (
             <CardHeader>
@@ -169,9 +173,12 @@ function App() {
             </CardHeader>
           ) : (
             <CardHeader className="canvasHeaderInitial">
-              <Typography variant="h5">
-                Select or scrape your images!
-              </Typography>
+              <div className="canvasHeader">
+                <Typography variant="h6" className="ml-2">
+                  Model: {state.model}
+                </Typography>
+                <ModelDropdown />
+              </div>
             </CardHeader>
           )}
           <CardBody className="canvasBody">

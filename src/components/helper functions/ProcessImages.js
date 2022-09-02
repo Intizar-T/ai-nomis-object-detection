@@ -56,6 +56,7 @@ function unzip(files, dispatch) {
     dispatch({ type: "INIT_BOXES", length });
     dispatch({ type: "SET_FILES", files: data });
     dispatch({ type: "SET_CURRENT_FILE_INDEX", index: 0 });
+    dispatch({ type: "UPDATE_IMAGES_PROCESSED", processed: true });
   });
 }
 

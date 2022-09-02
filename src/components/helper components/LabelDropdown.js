@@ -9,7 +9,7 @@ import {
 import { Context } from "../context/context";
 import "./../../styles/helper components/Dropdown.css";
 
-export default function Dropdown({ labels, rects, currentFileIndex }) {
+export default function LabelDropdown({ labels, rects, currentFileIndex }) {
   const { state, dispatch } = useContext(Context);
   return (
     <div className="dropdown">

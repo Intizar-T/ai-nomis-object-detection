@@ -43,8 +43,8 @@ const Reducer = (state, action) => {
     case "RESET_LABELS":
       return {
         ...state,
-        labels: []
-      }
+        labels: [],
+      };
     case "SET_FILES":
       return {
         ...state,
@@ -122,6 +122,21 @@ const Reducer = (state, action) => {
       return {
         ...state,
         imagesReady: action.ready,
+      };
+    case "UPDATE_IMAGES_PROCESSED":
+      return {
+        ...state,
+        imagesProcessed: action.processed,
+      };
+    case "UPDATE_MODEL":
+      return {
+        ...state,
+        model: action.model,
+      };
+    case "UPDATE_MOBILENET_RESULTS":
+      return {
+        ...state,
+        mobilenetResults: action.results,
       };
     default:
       return state;
