@@ -84,17 +84,19 @@ function App() {
   };
 
   const checkDeselect = (e) => {
-    try {
-      const stage = e.target.getStage();
-      const rects = stage.find("Rect");
-      const isRect = rects.includes(e.target);
-
-      if (!isRect) {
-        dispatch({ type: "SET_SELECTED_RECT_ID", id: null });
-      }
-    } catch (error) {
-      if (!(e.target.nodeName === "CANVAS")) {
-        dispatch({ type: "SET_SELECTED_RECT_ID", id: null });
+    if(state.selectedRectId){
+      try {
+        const stage = e.target.getStage();
+        const rects = stage.find("Rect");
+        const isRect = rects.includes(e.target);
+  
+        if (!isRect) {
+          dispatch({ type: "SET_SELECTED_RECT_ID", id: null });
+        }
+      } catch (error) {
+        if (!(e.target.nodeName === "CANVAS")) {
+          dispatch({ type: "SET_SELECTED_RECT_ID", id: null });
+        }
       }
     }
   };
