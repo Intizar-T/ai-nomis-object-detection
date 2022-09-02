@@ -29,14 +29,9 @@ const DownloadAll = async (state, dispatch, forDetection) => {
           canvas.width = img.width;
 
           context.drawImage(img, 0, 0);
-          //   console.log("canvas size = " + canvas.width + ", " + canvas.height);
-          //   console.log("image size = " + img.width + ", " + img.height);
           try {
             if (!forDetection) {
               const rect = state.rectangles[index];
-              const hist = rect.hist;
-              const i = hist.length - 1;
-              // console.log(hist);
               context.lineWidth =
                 rect.strokeWidth * Math.min(widthRatio, heightRatio);
               context.strokeRect(
