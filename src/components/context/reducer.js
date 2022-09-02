@@ -40,6 +40,11 @@ const Reducer = (state, action) => {
         ...state,
         rectangles: action.rects,
       };
+    case "RESET_LABELS":
+      return {
+        ...state,
+        labels: []
+      }
     case "SET_FILES":
       return {
         ...state,
