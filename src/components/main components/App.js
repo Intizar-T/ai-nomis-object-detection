@@ -36,7 +36,7 @@ function App() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (state.files.length > 0 && state.model !== "not selected") {
+    if (state.files.length > 0) { //&& state.model !== "not selected" -> implement this later
       async function callResizeImages() {
         const newFiles = await ResizeImages(state, dispatch);
         dispatch({ type: "SET_FILES", files: newFiles });
@@ -172,13 +172,11 @@ function App() {
               <InternalHeader state={state} dispatch={dispatch} />
             </CardHeader>
           ) : (
-            <CardHeader className="canvasHeaderInitial">
-              <div className="canvasHeader">
+            <CardHeader className="canvasHeader">
                 <Typography variant="h6" className="ml-2">
                   Model: {state.model}
                 </Typography>
                 <ModelDropdown />
-              </div>
             </CardHeader>
           )}
           <CardBody className="canvasBody">

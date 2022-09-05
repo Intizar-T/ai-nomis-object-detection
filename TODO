@@ -1,5 +1,13 @@
- ISSUE CREATED: 7/25/2022
- - rectangles are not moving inside the canvas freely (boundaries are problematic)
- - change the initial rectangle coordinates to the auto generated ones (esp make sure history is consistent)
- - 
+ ISSUE CREATED: 7/25/2022:
+ - rectangles are not moving inside the canvas freely (boundaries are problematic) -> PARTIALLY SOLVED
+ - change the initial rectangle coordinates to the auto generated ones (esp make sure history is consistent) -> SOLVED
+ 
+ ISSUES FOR 9/5/2022:
+ - find the max probability for mobilenet prediction
+ - show all three mobilenet results and allow choosing
+ - remove rects for mobilenet (both for drawing and downloads)
+ - update the json downloads accordingly
+ - add the scraped keyword to the label list
+ - [OPTIONAL] allow adding a new label
+ - [OPTIONAL] 
  

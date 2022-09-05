@@ -52,7 +52,7 @@
             border-blue-400;
     }
     
-    .canvasHeaderInitial {
+    /* .canvasHeaderInitial {
         @apply
             h-16
             flex
@@ -60,7 +60,7 @@
             justify-center
             border-2 
             border-blue-400;
-    }
+    } */
     
     .canvasBody {
         @apply
