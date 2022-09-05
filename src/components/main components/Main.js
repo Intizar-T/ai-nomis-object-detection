@@ -43,25 +43,27 @@ const Main = (props) => {
     >
       <Layer>
         <RenderImage URL={URL} imageSize={curFile[2]} />
-        <Rectangle
-          key={curRects.id}
-          shapeProps={curRects}
-          isSelected={curRects.id === state.selectedRectId}
-          onSelect={() => {
-            dispatch({
-              type: "SET_SELECTED_RECT_ID",
-              id: curRects.id,
-            });
-          }}
-          onChange={(newAttrs) => {
-            updateHistory();
-            const rects = state.rectangles.slice();
-            rects[curRects.id] = newAttrs;
-            dispatch({ type: "UPDATE_RECTS", rects });
-          }}
-          stageWidth={stageWidth}
-          stageHeight={stageHeight}
-        />
+        {state.model === "coco-ssd" && (
+          <Rectangle
+            key={curRects.id}
+            shapeProps={curRects}
+            isSelected={curRects.id === state.selectedRectId}
+            onSelect={() => {
+              dispatch({
+                type: "SET_SELECTED_RECT_ID",
+                id: curRects.id,
+              });
+            }}
+            onChange={(newAttrs) => {
+              updateHistory();
+              const rects = state.rectangles.slice();
+              rects[curRects.id] = newAttrs;
+              dispatch({ type: "UPDATE_RECTS", rects });
+            }}
+            stageWidth={stageWidth}
+            stageHeight={stageHeight}
+          />
+        )}
       </Layer>
     </Stage>
   );

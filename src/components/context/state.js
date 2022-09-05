@@ -13,8 +13,8 @@ const DEFAULT_STATE = {
   imageCount: 0,
   imagesReady: false,
   imagesProcessed: false,
-  model: "coco-ssd",
-  mobilenetResults: {},
+  model: "mobilenet",
+  mobilenetResults: [],
 };
 
 export default DEFAULT_STATE;

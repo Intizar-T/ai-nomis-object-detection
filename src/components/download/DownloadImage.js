@@ -6,8 +6,6 @@ const DownloadImage = async (state) => {
   const curIndex = state.currentFileIndex;
   const curFile = state.files[curIndex];
   const curRect = state.rectangles[curIndex];
-  const curHist = curRect.hist;
-  const curHistLen = curHist.length - 1;
   const imgWidth = curFile[2].width;
   const imgHeight = curFile[2].height;
 
@@ -23,13 +21,16 @@ const DownloadImage = async (state) => {
 
         context.drawImage(img, 0, 0);
 
-        context.lineWidth = curRect.strokeWidth * Math.min(widthRatio, heightRatio);
-        context.strokeRect(
-          curRect.x * widthRatio,
-          curRect.y * heightRatio,
-          curRect.width * widthRatio,
-          curRect.height * heightRatio
-        );
+        if (state.model === "coco-ssd") {
+          context.lineWidth =
+            curRect.strokeWidth * Math.min(widthRatio, heightRatio);
+          context.strokeRect(
+            curRect.x * widthRatio,
+            curRect.y * heightRatio,
+            curRect.width * widthRatio,
+            curRect.height * heightRatio
+          );
+        }
         resolve(canvas.toDataURL());
       } catch (err) {
         reject(err);

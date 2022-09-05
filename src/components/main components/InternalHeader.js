@@ -3,6 +3,8 @@ import LabelDropdown from "../helper components/LabelDropdown";
 import "./../../styles/main components/InternalHeader.css";
 
 const InternalHeader = ({ state, dispatch }) => {
+  const currIndex = state.currentFileIndex;
+  const currMobilenetResult = state.mobilenetResults[currIndex];
   return state.model === "coco-ssd" ? (
     <div className="canvasHeader">
       <Typography variant="h6" className="ml-2">
@@ -18,10 +20,10 @@ const InternalHeader = ({ state, dispatch }) => {
   ) : (
     <div className="canvasHeader">
       <Typography variant="h6" className="ml-2">
-        Label: {state.mobilenetResults.className}
+        Label: {currMobilenetResult ? currMobilenetResult.className : ""}
       </Typography>
       <Typography variant="h6" className="ml-2">
-        Accuracy: {state.mobilenetResults.probability}
+        Accuracy: {currMobilenetResult ? currMobilenetResult.probability : ""}
       </Typography>
     </div>
   );

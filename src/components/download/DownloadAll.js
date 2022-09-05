@@ -28,7 +28,7 @@ const DownloadAll = async (state, dispatch, forDetection) => {
 
           context.drawImage(img, 0, 0);
           try {
-            if (!forDetection) {
+            if (!forDetection && state.model === "coco-ssd") {
               const rect = state.rectangles[index];
               context.lineWidth =
                 rect.strokeWidth * Math.min(widthRatio, heightRatio);

@@ -3,10 +3,12 @@
  - change the initial rectangle coordinates to the auto generated ones (esp make sure history is consistent) -> SOLVED
  
  ISSUES FOR 9/5/2022:
- - find the max probability for mobilenet prediction
- - show all three mobilenet results and allow choosing
- - remove rects for mobilenet (both for drawing and downloads)
- - update the json downloads accordingly
+ - find the max probability for mobilenet prediction -> SOLVED
+ - show all three mobilenet results and allow choosing -> UNNECESSARY
+ - remove rects for mobilenet (both for drawing and downloads) -> SOLVED
+ - for mobilenet, label and accuracy is saved for all images -> SOLVED
+ - update the json downloads accordingly -> SOLVED
+ - update image downloads accordingly -> SOLVED
  - add the scraped keyword to the label list
  - [OPTIONAL] allow adding a new label
  - [OPTIONAL] 

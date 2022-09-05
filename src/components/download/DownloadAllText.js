@@ -1,27 +1,34 @@
 const DownloadAllText = (state) => {
-  let currRect = null,
-    coord = null;
-  const coordArr = [];
-  let originalImgSize = 0,
-    currImgSize = 0,
-    widthRatio = 0,
-    heightRatio = 0;
-  for (let i = 0; i < state.files.length; i++) {
-    originalImgSize = state.files[i][3];
-    currImgSize = state.files[i][2];
-    widthRatio = originalImgSize.originalWidth / currImgSize.width;
-    heightRatio = originalImgSize.originalHeight / currImgSize.height;
+  let coordArr = [];
+  if (state.model === "coco-ssd") {
+    let coord = {};
+    let currRect = null;
+    let originalImgSize = 0,
+      currImgSize = 0,
+      widthRatio = 0,
+      heightRatio = 0;
+    for (let i = 0; i < state.files.length; i++) {
+      originalImgSize = state.files[i][3];
+      currImgSize = state.files[i][2];
+      widthRatio = originalImgSize.originalWidth / currImgSize.width;
+      heightRatio = originalImgSize.originalHeight / currImgSize.height;
 
-    currRect = state.rectangles[i];
-    coord = {
-      x: currRect.x * widthRatio,
-      y: currRect.y * heightRatio,
-      width: currRect.width * widthRatio,
-      height: currRect.height * heightRatio,
-      label: currRect.label,
-      imageName: i,
-    };
-    coordArr.push(coord);
+      currRect = state.rectangles[i];
+      coord = {
+        x: currRect.x * widthRatio,
+        y: currRect.y * heightRatio,
+        width: currRect.width * widthRatio,
+        height: currRect.height * heightRatio,
+        label: currRect.label,
+        imageName: i,
+      };
+      coordArr.push(coord);
+    }
+  } else if (state.model === "mobilenet") {
+    coordArr = state.mobilenetResults;
+    coordArr.map((coord, index) => {
+      coord["imageName"] = index;
+    });
   }
 
   const element = document.createElement("a");

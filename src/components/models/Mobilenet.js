@@ -3,33 +3,37 @@ import * as mobilenet from "@tensorflow-models/mobilenet";
 
 const Mobilenet = async (state, dispatch) => {
   if (state.files.length > 0) {
-    dispatch({ type: "RESET_LABELS" });
     const net = await mobilenet.load();
     const images = await Images(state.files);
-    let labels = [];
+    let mobilenetResults = [];
+    let maxPrediction = {};
 
     images.forEach(async (image, i) => {
       try {
         const prediction = await net.classify(image);
         if (prediction.length === 0) return;
-        const probMap = {};
-        for(let i = 0; i < prediction.length; i++) {
-          probMap[prediction[i].probability] = prediction[i].className;
-        }
-        // TODO: find the max prob!
-        const maxPrediction = {
+        // const probMap = {};
+        // let prob = 0;
+        // for (let i = 0; i < prediction.length; i++) {
+        //   prob = prediction[i].probability.toFixed(3);
+        //   probMap[prob] = prediction[i].className;
+        // }
+        // const maxKey = Math.max.apply(null, Object.keys(probMap));
+        // console.log(maxKey);
+        // // TODO: find the max prob!
+        maxPrediction = {
           className: prediction[0].className,
           probability: prediction[0].probability.toFixed(3),
         };
-        dispatch({
-          type: "UPDATE_MOBILENET_RESULTS",
-          results: maxPrediction,
-        });
+        mobilenetResults.push(maxPrediction);
       } catch (err) {
         console.log(err);
       }
     });
-    dispatch({ type: "INIT_LABELS", labels: labels });
+    dispatch({
+      type: "UPDATE_MOBILENET_RESULTS",
+      results: mobilenetResults,
+    });
     dispatch({ type: "UPDATE_IMAGES_READY", ready: true });
   }
 };

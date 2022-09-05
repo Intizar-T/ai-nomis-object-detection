@@ -10,7 +10,6 @@ import LandingPage from "./LandingPage";
 import ProcessImages from "../helper functions/ProcessImages";
 import ResizeImages from "../helper functions/ResizeImages";
 import InternalHeader from "./InternalHeader";
-import ChooseModel from "../helper components/ChooseModel";
 import ModelDropdown from "../helper components/ModelDropdown";
 import "./../../styles/main components/App.css";
 
@@ -36,7 +35,8 @@ function App() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (state.files.length > 0) { //&& state.model !== "not selected" -> implement this later
+    if (state.files.length > 0) {
+      //&& state.model !== "not selected" -> implement this later
       async function callResizeImages() {
         const newFiles = await ResizeImages(state, dispatch);
         dispatch({ type: "SET_FILES", files: newFiles });
@@ -173,10 +173,10 @@ function App() {
             </CardHeader>
           ) : (
             <CardHeader className="canvasHeader">
-                <Typography variant="h6" className="ml-2">
-                  Model: {state.model}
-                </Typography>
-                <ModelDropdown />
+              <Typography variant="h6" className="ml-2">
+                Model: {state.model}
+              </Typography>
+              <ModelDropdown />
             </CardHeader>
           )}
           <CardBody className="canvasBody">
