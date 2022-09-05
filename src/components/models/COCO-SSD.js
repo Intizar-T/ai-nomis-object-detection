@@ -3,7 +3,7 @@ import * as cocossd from "@tensorflow-models/coco-ssd";
 
 const COCO_SSD = async (state, dispatch) => {
   if (state.files.length > 0) {
-    dispatch({ type: "RESET_LABELS" })
+    dispatch({ type: "RESET_LABELS" });
     const net = await cocossd.load();
     const images = await Images(state.files);
     const rects = state.rectangles;
@@ -43,7 +43,7 @@ const COCO_SSD = async (state, dispatch) => {
     });
     dispatch({ type: "INIT_LABELS", labels: labels });
     dispatch({ type: "UPDATE_IMAGES_READY", ready: true });
-
+    dispatch({ type: "UPDATE_PROCESSING_STARTED", started: false });
     // console.log("-------------------------");
   }
 };

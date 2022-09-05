@@ -35,6 +35,7 @@ const Mobilenet = async (state, dispatch) => {
       results: mobilenetResults,
     });
     dispatch({ type: "UPDATE_IMAGES_READY", ready: true });
+    dispatch({ type: "UPDATE_PROCESSING_STARTED", started: false });
   }
 };
 

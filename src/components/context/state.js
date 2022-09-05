@@ -15,6 +15,7 @@ const DEFAULT_STATE = {
   imagesProcessed: false,
   model: "mobilenet",
   mobilenetResults: [],
+  processingStarted: false,
 };
 
 export default DEFAULT_STATE;

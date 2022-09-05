@@ -138,6 +138,11 @@ const Reducer = (state, action) => {
         ...state,
         mobilenetResults: action.results,
       };
+    case "UPDATE_PROCESSING_STARTED":
+      return {
+        ...state,
+        processingStarted: action.started,
+      };
     default:
       return state;
   }

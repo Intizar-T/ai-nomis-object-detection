@@ -11,6 +11,7 @@ import ProcessImages from "../helper functions/ProcessImages";
 import ResizeImages from "../helper functions/ResizeImages";
 import InternalHeader from "./InternalHeader";
 import ModelDropdown from "../helper components/ModelDropdown";
+import { BallTriangle } from "react-loader-spinner";
 import "./../../styles/main components/App.css";
 
 import {
@@ -107,6 +108,7 @@ function App() {
 
   const onSocketOpen = useCallback(() => {
     setIsConnected(true);
+    dispatch({ type: "UPDATE_PROCESSING_STARTED", started: true });
     console.log("Connected to the WebSocket");
   }, []);
 
@@ -180,9 +182,22 @@ function App() {
             </CardHeader>
           )}
           <CardBody className="canvasBody">
-            {state.imagesReady ? (
+            {state.processingStarted && (
+              <BallTriangle
+                height={150}
+                width={150}
+                radius={6}
+                color="green"
+                ariaLabel="three-dots-loading"
+                wrapperStyle=""
+                wrapperClass={{}}
+                visible={true}
+              />
+            )}
+            {state.imagesReady && state.processingStarted === false && (
               <Main checkDeselect={checkDeselect} stageRef={stageRef} />
-            ) : (
+            )}
+            {state.files.length === 0 && state.processingStarted === false && (
               <LandingPage />
             )}
           </CardBody>

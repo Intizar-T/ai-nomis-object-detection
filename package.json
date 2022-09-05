@@ -25,6 +25,7 @@
 		"react-image-file-resizer": "^0.4.8",
 		"react-konva": "^18.2.1",
 		"react-konva-utils": "^0.3.0",
+		"react-loader-spinner": "^5.3.3",
 		"react-scripts": "5.0.1",
 		"save-as": "^0.1.8",
 		"use-image": "^1.0.12",
